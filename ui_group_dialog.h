@@ -17,6 +17,7 @@
 #include <QtGui/QDialogButtonBox>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
+#include <QtGui/QPushButton>
 #include <QtGui/QTableWidget>
 #include <QtGui/QTreeView>
 #include <QtGui/QWidget>
@@ -31,6 +32,7 @@ public:
     QHBoxLayout *horizontalLayout;
     QTreeView *treeView;
     QTableWidget *tableWidget;
+    QPushButton *add_group_button;
 
     void setupUi(QDialog *group_dialog)
     {
@@ -58,6 +60,9 @@ public:
 
         horizontalLayout->addWidget(tableWidget);
 
+        add_group_button = new QPushButton(group_dialog);
+        add_group_button->setObjectName(QString::fromUtf8("add_group_button"));
+        add_group_button->setGeometry(QRect(20, 320, 99, 27));
 
         retranslateUi(group_dialog);
         QObject::connect(buttonBox, SIGNAL(accepted()), group_dialog, SLOT(accept()));
@@ -69,6 +74,7 @@ public:
     void retranslateUi(QDialog *group_dialog)
     {
         group_dialog->setWindowTitle(QApplication::translate("group_dialog", "Dialog", 0, QApplication::UnicodeUTF8));
+        add_group_button->setText(QApplication::translate("group_dialog", "Add group", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

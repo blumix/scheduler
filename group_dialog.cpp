@@ -12,8 +12,8 @@ group_dialog::group_dialog(database *db, QWidget *parent) :
 {
   ui->setupUi(this);
 
-  QStandardItemModel *model = new QStandardItemModel(this);
-  QStandardItem *parentItem = model->invisibleRootItem();
+  m_model = std::make_unique<QStandardItemModel>(this);
+  QStandardItem *parentItem = m_model->invisibleRootItem();
   int row = 0;
   for (auto val : m_db->get_group_ids ())
     {
@@ -22,7 +22,7 @@ group_dialog::group_dialog(database *db, QWidget *parent) :
       parentItem->setChild(row++,0,item);
     }
   QTreeView *treeView = new QTreeView(this);
-  treeView->setModel(model);
+  treeView->setModel(m_model.get ());
 
   connect (ui->add_group_button, SIGNAL (clicked ()), this, SLOT(add_button_clicked ()));
 }
@@ -35,7 +35,7 @@ group_dialog::~group_dialog()
 void group_dialog::add_button_clicked()
 {
   int new_group_id = m_db->add_new_group ();
-  QStandardItem *parentItem = model->invisibleRootItem();
+  QStandardItem *parentItem = m_model->invisibleRootItem();
   QStandardItem *item = new QStandardItem();
   item->setText (QString::number (m_db->get_group (new_group_id).get_group_num ()));
   parentItem->setChild(parentItem->rowCount (),0,item);

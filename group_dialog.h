@@ -4,6 +4,9 @@
 #include "database.h"
 
 #include <QDialog>
+#include <QStandardItemModel>
+
+#include <bits/unique_ptr.h>
 
 namespace Ui {
   class group_dialog;
@@ -22,6 +25,7 @@ public slots:
 private:
   Ui::group_dialog *ui;
   database *m_db;
+  std::unique_ptr<QStandardItemModel> m_model;
 };
 
 #endif // GROUP_DIALOG_H
