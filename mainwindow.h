@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "database.h"
+
 #include <QMainWindow>
 #include <memory>
 
@@ -18,9 +20,11 @@ class MainWindow : public QMainWindow
 public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
-
+private slots:
+  void group_changed_clicked ();
 private:
   Ui::MainWindow *ui;
+  std::unique_ptr<database> m_db;
   std::unique_ptr<QStandardItemModel> m_model;
 };
 

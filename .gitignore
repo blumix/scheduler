@@ -1,1 +1,4 @@
 *.user
+*.o
+moc_*
+scheduler

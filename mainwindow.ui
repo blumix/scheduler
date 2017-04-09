@@ -60,7 +60,7 @@
   </widget>
   <action name="actionAdd_group_profile">
    <property name="text">
-    <string>Add group profile</string>
+    <string>change group profiles</string>
    </property>
   </action>
   <action name="actionAdd_teacher_profile">
