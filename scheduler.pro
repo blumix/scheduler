@@ -18,14 +18,16 @@ SOURCES += main.cpp\
     teacher_profile.cpp \
     room_profile.cpp \
     group_dialog.cpp \
-    database.cpp
+    database.cpp \
+    kernel/tree_solver.cpp
 
 HEADERS  += mainwindow.h \
     group_profile.h \
     teacher_profile.h \
     room_profile.h \
     group_dialog.h \
-    database.h
+    database.h \
+    kernel/tree_solver.h
 
 FORMS    += mainwindow.ui \
     group_dialog.ui

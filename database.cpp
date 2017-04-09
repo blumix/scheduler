@@ -23,5 +23,6 @@ std::vector<int> database::get_group_ids()
   std::vector<int> ret;
   for (auto val : m_groups)
     ret.push_back (val.first);
+
   return ret;
 }
