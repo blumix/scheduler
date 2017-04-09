@@ -15,10 +15,12 @@
 #include <QtGui/QButtonGroup>
 #include <QtGui/QDialog>
 #include <QtGui/QDialogButtonBox>
+#include <QtGui/QFormLayout>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
+#include <QtGui/QLabel>
 #include <QtGui/QPushButton>
-#include <QtGui/QTableWidget>
+#include <QtGui/QSpinBox>
 #include <QtGui/QTreeView>
 #include <QtGui/QWidget>
 
@@ -31,7 +33,13 @@ public:
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout;
     QTreeView *treeView;
-    QTableWidget *tableWidget;
+    QFormLayout *formLayout;
+    QLabel *label_2;
+    QSpinBox *tread;
+    QLabel *label;
+    QSpinBox *cource;
+    QLabel *label_3;
+    QSpinBox *number;
     QPushButton *add_group_button;
 
     void setupUi(QDialog *group_dialog)
@@ -46,7 +54,7 @@ public:
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         horizontalLayoutWidget = new QWidget(group_dialog);
         horizontalLayoutWidget->setObjectName(QString::fromUtf8("horizontalLayoutWidget"));
-        horizontalLayoutWidget->setGeometry(QRect(10, 10, 471, 301));
+        horizontalLayoutWidget->setGeometry(QRect(10, 20, 471, 301));
         horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
@@ -55,14 +63,47 @@ public:
 
         horizontalLayout->addWidget(treeView);
 
-        tableWidget = new QTableWidget(horizontalLayoutWidget);
-        tableWidget->setObjectName(QString::fromUtf8("tableWidget"));
+        formLayout = new QFormLayout();
+        formLayout->setObjectName(QString::fromUtf8("formLayout"));
+        label_2 = new QLabel(horizontalLayoutWidget);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
 
-        horizontalLayout->addWidget(tableWidget);
+        formLayout->setWidget(0, QFormLayout::LabelRole, label_2);
+
+        tread = new QSpinBox(horizontalLayoutWidget);
+        tread->setObjectName(QString::fromUtf8("tread"));
+
+        formLayout->setWidget(1, QFormLayout::FieldRole, tread);
+
+        label = new QLabel(horizontalLayoutWidget);
+        label->setObjectName(QString::fromUtf8("label"));
+
+        formLayout->setWidget(1, QFormLayout::LabelRole, label);
+
+        cource = new QSpinBox(horizontalLayoutWidget);
+        cource->setObjectName(QString::fromUtf8("cource"));
+
+        formLayout->setWidget(2, QFormLayout::FieldRole, cource);
+
+        label_3 = new QLabel(horizontalLayoutWidget);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+
+        formLayout->setWidget(2, QFormLayout::LabelRole, label_3);
+
+        number = new QSpinBox(horizontalLayoutWidget);
+        number->setObjectName(QString::fromUtf8("number"));
+
+        formLayout->setWidget(0, QFormLayout::FieldRole, number);
+
+
+        horizontalLayout->addLayout(formLayout);
 
         add_group_button = new QPushButton(group_dialog);
         add_group_button->setObjectName(QString::fromUtf8("add_group_button"));
         add_group_button->setGeometry(QRect(20, 320, 99, 27));
+        buttonBox->raise();
+        horizontalLayoutWidget->raise();
+        add_group_button->raise();
 
         retranslateUi(group_dialog);
         QObject::connect(buttonBox, SIGNAL(accepted()), group_dialog, SLOT(accept()));
@@ -74,6 +115,15 @@ public:
     void retranslateUi(QDialog *group_dialog)
     {
         group_dialog->setWindowTitle(QApplication::translate("group_dialog", "Dialog", 0, QApplication::UnicodeUTF8));
+        label_2->setText(QApplication::translate("group_dialog", "Number", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("group_dialog", "Thread", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_WHATSTHIS
+        cource->setWhatsThis(QString());
+#endif // QT_NO_WHATSTHIS
+#ifndef QT_NO_ACCESSIBILITY
+        cource->setAccessibleName(QString());
+#endif // QT_NO_ACCESSIBILITY
+        label_3->setText(QApplication::translate("group_dialog", "Cource", 0, QApplication::UnicodeUTF8));
         add_group_button->setText(QApplication::translate("group_dialog", "Add group", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

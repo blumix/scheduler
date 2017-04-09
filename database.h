@@ -10,7 +10,7 @@ class database
 public:
   database();
   int add_new_group ();
-  group_profile &get_group (int group_id);
+  group_profile &get_group(int group_id);
   std::vector<int> get_group_ids ();
 private:
   std::map<int, group_profile> m_groups;

@@ -19,8 +19,16 @@ class group_dialog : public QDialog
 public:
   explicit group_dialog(database *db, QWidget *parent = 0);
   ~group_dialog();
-public slots:
+
+private slots:
   void add_button_clicked ();
+  void course_changed();
+  void selection_changed();
+  void num_changed();
+  void tread_changed();
+
+private:
+  void fill_the_model();
 
 private:
   Ui::group_dialog *ui;
