@@ -19,6 +19,7 @@ SOURCES += main.cpp\
     room_profile.cpp \
     group_dialog.cpp \
     database.cpp \
+    teacher_dialog.cpp
     kernel/tree_solver.cpp
 
 HEADERS  += mainwindow.h \
@@ -27,9 +28,11 @@ HEADERS  += mainwindow.h \
     room_profile.h \
     group_dialog.h \
     database.h \
+    teacher_dialog.h
     kernel/tree_solver.h
 
 FORMS    += mainwindow.ui \
-    group_dialog.ui
+    group_dialog.ui \
+    teacher_dialog.ui
 
 QMAKE_CXXFLAGS += -std=c++14
