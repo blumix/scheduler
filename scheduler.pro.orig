@@ -19,11 +19,8 @@ SOURCES += main.cpp\
     room_profile.cpp \
     group_dialog.cpp \
     database.cpp \
-<<<<<<< ddb37492385618dc1702245adfcd29bee626b407
+    teacher_dialog.cpp \
     kernel/tree_solver.cpp
-=======
-    teacher_dialog.cpp
->>>>>>> teacher dialog added
 
 HEADERS  += mainwindow.h \
     group_profile.h \
@@ -31,11 +28,14 @@ HEADERS  += mainwindow.h \
     room_profile.h \
     group_dialog.h \
     database.h \
-<<<<<<< ddb37492385618dc1702245adfcd29bee626b407
+<<<<<<< 2d4c2bc40827951bce3bea00f0177cfeef1c0455
+    teacher_dialog.h \
     kernel/tree_solver.h
 =======
-    teacher_dialog.h
->>>>>>> teacher dialog added
+    kernel/tree_solver.h \
+    kernel/common_defines.h \
+    kernel/common_defines.h
+>>>>>>> ENH: kernel: tree solver uses lesson uid (not full node)
 
 FORMS    += mainwindow.ui \
     group_dialog.ui \

@@ -1,19 +1,22 @@
 /// \file kernel/tree_solver.cpp
 
 #include "kernel/tree_solver.h"
+
 #include <iostream>
 
-void tree_solver::print_vector (const std::vector<tree_node> &vector)
-{
-  std::cout << "Size=" << vector.size () << std::endl;
-  for (const auto &elem : vector)
-    std::cout << "-->" << elem.group_id << " " << elem.room_id << " " << elem.teacher_id << "; color=" << m_colors[elem] << std::endl;
-}
+//void tree_solver::print_vector (const std::vector<tree_node> &vector)
+//{
+//  std::cout << "Size=" << vector.size () << std::endl;
+//  for (const auto &elem : vector)
+//    std::cout << "-->" << elem.group_id << " " << elem.room_id << " " << elem.teacher_id << "; color=" << m_colors[elem] << std::endl;
+//}
 
-void tree_solver::calculate (const std::vector<tree_node> &input_data)
+std::vector<std::unordered_set<uid>> tree_solver::calculate (const std::vector<tree_node> &input_data)
 {
   construct_adjacency_list (input_data);
   set_colors ();
+
+  return get_result_timetable_set ();
 }
 
 void tree_solver::construct_adjacency_list (const std::vector<tree_node> &input_data)
@@ -29,21 +32,21 @@ void tree_solver::construct_adjacency_list (const std::vector<tree_node> &input_
           if (other_node_idx != curr_node_idx && current_element.is_neighbour (node))
             adjacted_nodes.push_back (node);
         }
-      m_adjacency_list[current_element] = adjacted_nodes;
-      m_colors[current_element] = -1;
+      m_adjacency_list[current_element.course_id] = adjacted_nodes;
+      m_colors[current_element.course_id] = -1;
     }
 }
 
 void tree_solver::set_colors ()
 {
   std::vector<bool> availible_colors (m_adjacency_list.size (), false);
+  unsigned int color = 0;
   for (const auto &element : m_adjacency_list)
     {
       // set color of element
-      unsigned int color = 0;
       for (const auto &neighbour_elem : element.second)
         {
-          int neighbour_color = m_colors[neighbour_elem];
+          int neighbour_color = m_colors[neighbour_elem.course_id];
           if (neighbour_color != -1)
             availible_colors[neighbour_color] = true;
 
@@ -55,12 +58,20 @@ void tree_solver::set_colors ()
         }
       m_colors[element.first] = color;
     }
+  m_colors_count = color + 1;
+//  /// DEBUG INFO
+//  for (const auto &elem : m_adjacency_list)
+//    {
+//      std::cout << "(" << elem.first.group_id << " " << elem.first.room_id << " " << elem.first.teacher_id << ") Color="
+//                << m_colors[elem.first] << std::endl;
+//      print_vector (elem.second);
+  //    }
+}
 
-  /// DEBUF INFO
-  for (const auto &elem : m_adjacency_list)
-    {
-      std::cout << "(" << elem.first.group_id << " " << elem.first.room_id << " " << elem.first.teacher_id << ") Color="
-                << m_colors[elem.first] << std::endl;
-      print_vector (elem.second);
-    }
+std::vector<std::unordered_set<uid>> tree_solver::get_result_timetable_set ()
+{
+  std::vector<std::unordered_set<uid>> result (m_colors_count);
+  for (const auto &it : m_colors)
+    result[it.second].insert (it.first);
+  return result;
 }

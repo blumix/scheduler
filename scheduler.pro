@@ -29,7 +29,9 @@ HEADERS  += mainwindow.h \
     group_dialog.h \
     database.h \
     teacher_dialog.h \
-    kernel/tree_solver.h
+    kernel/tree_solver.h \
+    kernel/common_defines.h \
+    kernel/common_defines.h
 
 FORMS    += mainwindow.ui \
     group_dialog.ui \
