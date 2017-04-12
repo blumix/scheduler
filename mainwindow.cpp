@@ -12,7 +12,6 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->setupUi(this);
   m_db = std::make_unique<database> ();
   m_model = std::make_unique<QStandardItemModel> (3,3);
-  m_model->setItem(1, 0, item);
   ui->main_window_tableView->setModel (m_model.get ());
 
   if (!connect (ui->actionAdd_group_profile, SIGNAL (triggered()), this, SLOT (group_changed_clicked()) ))

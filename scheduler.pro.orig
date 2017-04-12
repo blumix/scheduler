@@ -19,8 +19,11 @@ SOURCES += main.cpp\
     room_profile.cpp \
     group_dialog.cpp \
     database.cpp \
-    teacher_dialog.cpp \
+<<<<<<< ddb37492385618dc1702245adfcd29bee626b407
     kernel/tree_solver.cpp
+=======
+    teacher_dialog.cpp
+>>>>>>> teacher dialog added
 
 HEADERS  += mainwindow.h \
     group_profile.h \
@@ -28,8 +31,11 @@ HEADERS  += mainwindow.h \
     room_profile.h \
     group_dialog.h \
     database.h \
-    teacher_dialog.h \
+<<<<<<< ddb37492385618dc1702245adfcd29bee626b407
     kernel/tree_solver.h
+=======
+    teacher_dialog.h
+>>>>>>> teacher dialog added
 
 FORMS    += mainwindow.ui \
     group_dialog.ui \
