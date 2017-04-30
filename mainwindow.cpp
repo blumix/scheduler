@@ -1,4 +1,5 @@
 #include "group_dialog.h"
+#include "teacher_dialog.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -12,9 +13,10 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->setupUi(this);
   m_db = std::make_unique<database> ();
   m_model = std::make_unique<QStandardItemModel> (3,3);
-  ui->main_window_tableView->setModel (m_model.get ());
 
-  if (!connect (ui->actionAdd_group_profile, SIGNAL (triggered()), this, SLOT (group_changed_clicked()) ))
+  if (!connect (ui->actionAdd_group_profile, SIGNAL (triggered()), this, SLOT (group_changed_clicked ()) ))
+    qDebug() <<"connection failed!";
+  if (!connect (ui->actionAdd_teacher_profile, SIGNAL (triggered()), this, SLOT (teacher_changed_clicked ()) ))
     qDebug() <<"connection failed!";
 }
 
@@ -28,3 +30,11 @@ void MainWindow::group_changed_clicked()
   group_dialog dlg (m_db.get (), this);
   dlg.exec ();
 }
+
+
+void MainWindow::teacher_changed_clicked()
+{
+  teacher_dialog dlg (m_db.get (), this);
+  dlg.exec ();
+}
+

@@ -7,13 +7,16 @@
 class teacher_profile
 {
 public:
-  teacher_profile();
-  int get_id () {return m_teacher_id;}
-  int get_subject_id () {return m_subject_id;}
-  QString get_name () {return m_name;}
+  teacher_profile(int id);
+  int get_id () const {return m_id;}
+  QString get_name () const {return m_name;}
+  const std::vector<QString> &get_subjects() const {return m_subjects;}
+
+  std::vector<QString> &get_subjects() {return m_subjects;}
+  void set_name (QString  name) {m_name = name;}
 private:
-  int m_teacher_id = 0;
-  int m_subject_id = 0;
+  int m_id = 0;
+  std::vector<QString> m_subjects;
   QString m_name = {};
 };
 

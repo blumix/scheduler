@@ -7,7 +7,7 @@
 class group_profile
 {
 public:
-  group_profile(int id);
+  group_profile (int id);
 //  ~group_profile();
 
   int get_group_num (){return m_group_num;}

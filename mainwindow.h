@@ -21,6 +21,7 @@ public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
 private slots:
+  void teacher_changed_clicked();
   void group_changed_clicked ();
 private:
   Ui::MainWindow *ui;

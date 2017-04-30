@@ -6,23 +6,148 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>954</width>
+    <height>582</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QTableView" name="main_window_tableView">
+   <property name="minimumSize">
+    <size>
+     <width>685</width>
+     <height>334</height>
+    </size>
+   </property>
+   <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>5</x>
-      <y>-59</y>
-      <width>391</width>
-      <height>391</height>
+      <x>0</x>
+      <y>0</y>
+      <width>951</width>
+      <height>531</height>
      </rect>
     </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QTreeView" name="treeView"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QListView" name="listView"/>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QPushButton" name="add_arrow">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>right-arrow.png</normaloff>right-arrow.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="remove_arrow">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>left-arrow.png</normaloff>left-arrow.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QListView" name="listView_2"/>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QPushButton" name="groups_button">
+         <property name="text">
+          <string>Groups</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetMaximumSize</enum>
+         </property>
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Room Count</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="room_count"/>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="teacher_button">
+         <property name="text">
+          <string>Teachers/Subjects</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QPushButton" name="filename_button">
+         <property name="text">
+          <string>Export Filename</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" rowspan="3">
+        <widget class="QPushButton" name="run_calculation">
+         <property name="text">
+          <string>Run Calculation</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -30,27 +155,19 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>954</width>
      <height>25</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFIle">
-    <property name="title">
-     <string>FIle</string>
-    </property>
-    <addaction name="actionSave"/>
-    <addaction name="actionOpen"/>
-    <addaction name="actionExport_As"/>
-   </widget>
    <widget class="QMenu" name="menuAdd_content">
     <property name="title">
-     <string>Add content..</string>
+     <string>File</string>
     </property>
     <addaction name="actionAdd_group_profile"/>
     <addaction name="actionAdd_teacher_profile"/>
-    <addaction name="actionAdd_auditorium"/>
+    <addaction name="actionSet_Room_Count"/>
+    <addaction name="actionExport_file_name"/>
    </widget>
-   <addaction name="menuFIle"/>
    <addaction name="menuAdd_content"/>
   </widget>
   <widget class="QStatusBar" name="statusBar">
@@ -60,12 +177,12 @@
   </widget>
   <action name="actionAdd_group_profile">
    <property name="text">
-    <string>change group profiles</string>
+    <string>Groups</string>
    </property>
   </action>
   <action name="actionAdd_teacher_profile">
    <property name="text">
-    <string>Add teacher  profile</string>
+    <string>Teachers/Subjects</string>
    </property>
   </action>
   <action name="actionAdd_auditorium">
@@ -86,6 +203,16 @@
   <action name="actionExport_As">
    <property name="text">
     <string>Export As...</string>
+   </property>
+  </action>
+  <action name="actionExport_file_name">
+   <property name="text">
+    <string>Set Export Filename</string>
+   </property>
+  </action>
+  <action name="actionSet_Room_Count">
+   <property name="text">
+    <string>Set Room Count...</string>
    </property>
   </action>
  </widget>

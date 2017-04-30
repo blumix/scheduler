@@ -2,19 +2,19 @@
 #define DATABASE_H
 
 #include "group_profile.h"
+#include "index_table.h"
+#include "teacher_profile.h"
 
 #include <map>
+#include <bits/unique_ptr.h>
+
 
 class database
 {
 public:
   database();
-  int add_new_group ();
-  group_profile &get_group(int group_id);
-  std::vector<int> get_group_ids ();
-private:
-  std::map<int, group_profile> m_groups;
-  int m_group_id = 0;
+  std::unique_ptr<index_table<group_profile>> m_groups;
+  std::unique_ptr<index_table<teacher_profile>> m_teachers;
 };
 
 #endif // DATABASE_H

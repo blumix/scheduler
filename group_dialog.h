@@ -25,7 +25,7 @@ private slots:
   void course_changed();
   void selection_changed();
   void num_changed();
-  void tread_changed();
+  void thread_changed();
 
 private:
   void fill_the_model();
