@@ -26,6 +26,7 @@ private slots:
   void selection_changed();
   void num_changed();
   void thread_changed();
+  void remove_group();
 
 private:
   void fill_the_model();

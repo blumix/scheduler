@@ -22,6 +22,7 @@
 #include <QtGui/QPushButton>
 #include <QtGui/QSpinBox>
 #include <QtGui/QTreeView>
+#include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -33,6 +34,7 @@ public:
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout;
     QTreeView *treeView;
+    QVBoxLayout *verticalLayout;
     QFormLayout *formLayout;
     QLabel *label_2;
     QSpinBox *tread;
@@ -40,8 +42,9 @@ public:
     QSpinBox *cource;
     QLabel *label_3;
     QSpinBox *number;
-    QPushButton *add_group_button;
     QLabel *label_4;
+    QPushButton *add_group_button;
+    QPushButton *remove_group_button;
 
     void setupUi(QDialog *group_dialog)
     {
@@ -64,6 +67,8 @@ public:
 
         horizontalLayout->addWidget(treeView);
 
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         formLayout = new QFormLayout();
         formLayout->setObjectName(QString::fromUtf8("formLayout"));
         label_2 = new QLabel(horizontalLayoutWidget);
@@ -96,18 +101,26 @@ public:
 
         formLayout->setWidget(0, QFormLayout::FieldRole, number);
 
-        add_group_button = new QPushButton(horizontalLayoutWidget);
-        add_group_button->setObjectName(QString::fromUtf8("add_group_button"));
-
-        formLayout->setWidget(3, QFormLayout::FieldRole, add_group_button);
-
         label_4 = new QLabel(horizontalLayoutWidget);
         label_4->setObjectName(QString::fromUtf8("label_4"));
 
         formLayout->setWidget(3, QFormLayout::LabelRole, label_4);
 
 
-        horizontalLayout->addLayout(formLayout);
+        verticalLayout->addLayout(formLayout);
+
+        add_group_button = new QPushButton(horizontalLayoutWidget);
+        add_group_button->setObjectName(QString::fromUtf8("add_group_button"));
+
+        verticalLayout->addWidget(add_group_button);
+
+        remove_group_button = new QPushButton(horizontalLayoutWidget);
+        remove_group_button->setObjectName(QString::fromUtf8("remove_group_button"));
+
+        verticalLayout->addWidget(remove_group_button);
+
+
+        horizontalLayout->addLayout(verticalLayout);
 
 
         retranslateUi(group_dialog);
@@ -129,8 +142,9 @@ public:
         cource->setAccessibleName(QString());
 #endif // QT_NO_ACCESSIBILITY
         label_3->setText(QApplication::translate("group_dialog", "Cource", 0, QApplication::UnicodeUTF8));
-        add_group_button->setText(QApplication::translate("group_dialog", "Add group", 0, QApplication::UnicodeUTF8));
         label_4->setText(QString());
+        add_group_button->setText(QApplication::translate("group_dialog", "Add Group", 0, QApplication::UnicodeUTF8));
+        remove_group_button->setText(QApplication::translate("group_dialog", "Remove Group", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

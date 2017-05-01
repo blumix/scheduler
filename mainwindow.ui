@@ -38,14 +38,32 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
-          <widget class="QTreeView" name="treeView"/>
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>Groups:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QTreeView" name="groups_tree"/>
          </item>
         </layout>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
-          <widget class="QListView" name="listView"/>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>All Subjects:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTreeView" name="all_subjects"/>
+           </item>
+          </layout>
          </item>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -86,7 +104,18 @@
           </layout>
          </item>
          <item>
-          <widget class="QListView" name="listView_2"/>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QLabel" name="label_5">
+             <property name="text">
+              <string>Selected Subjects:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QListView" name="selected_subjects"/>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>
@@ -101,47 +130,55 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <property name="sizeConstraint">
-          <enum>QLayout::SetMaximumSize</enum>
-         </property>
-         <item>
-          <widget class="QLabel" name="label">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+       <item row="2" column="0">
+        <layout class="QGridLayout" name="gridLayout_2">
+         <item row="0" column="1">
+          <widget class="QSpinBox" name="rooms_count">
+           <property name="minimum">
+            <number>1</number>
            </property>
-           <property name="text">
-            <string>Room Count</string>
+           <property name="maximum">
+            <number>999</number>
+           </property>
+           <property name="value">
+            <number>10</number>
            </property>
           </widget>
          </item>
-         <item>
-          <widget class="QSpinBox" name="room_count"/>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Room count:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="file_name">
+           <property name="text">
+            <string>res.csv</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Results:</string>
+           </property>
+          </widget>
          </item>
         </layout>
+       </item>
+       <item row="3" column="0" rowspan="3">
+        <widget class="QPushButton" name="run_calculation">
+         <property name="text">
+          <string>Run Calculation</string>
+         </property>
+        </widget>
        </item>
        <item row="1" column="0">
         <widget class="QPushButton" name="teacher_button">
          <property name="text">
           <string>Teachers/Subjects</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QPushButton" name="filename_button">
-         <property name="text">
-          <string>Export Filename</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0" rowspan="3">
-        <widget class="QPushButton" name="run_calculation">
-         <property name="text">
-          <string>Run Calculation</string>
          </property>
         </widget>
        </item>
@@ -165,8 +202,6 @@
     </property>
     <addaction name="actionAdd_group_profile"/>
     <addaction name="actionAdd_teacher_profile"/>
-    <addaction name="actionSet_Room_Count"/>
-    <addaction name="actionExport_file_name"/>
    </widget>
    <addaction name="menuAdd_content"/>
   </widget>

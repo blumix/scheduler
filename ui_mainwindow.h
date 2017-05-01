@@ -17,6 +17,7 @@
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
+#include <QtGui/QLineEdit>
 #include <QtGui/QListView>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenu>
@@ -46,21 +47,27 @@ public:
     QHBoxLayout *horizontalLayout;
     QHBoxLayout *horizontalLayout_2;
     QVBoxLayout *verticalLayout_3;
-    QTreeView *treeView;
+    QLabel *label_3;
+    QTreeView *groups_tree;
     QHBoxLayout *horizontalLayout_3;
-    QListView *listView;
+    QVBoxLayout *verticalLayout;
+    QLabel *label_4;
+    QTreeView *all_subjects;
     QVBoxLayout *verticalLayout_2;
     QPushButton *add_arrow;
     QPushButton *remove_arrow;
-    QListView *listView_2;
+    QVBoxLayout *verticalLayout_4;
+    QLabel *label_5;
+    QListView *selected_subjects;
     QGridLayout *gridLayout;
     QPushButton *groups_button;
-    QHBoxLayout *horizontalLayout_4;
+    QGridLayout *gridLayout_2;
+    QSpinBox *rooms_count;
     QLabel *label;
-    QSpinBox *room_count;
-    QPushButton *teacher_button;
-    QPushButton *filename_button;
+    QLineEdit *file_name;
+    QLabel *label_2;
     QPushButton *run_calculation;
+    QPushButton *teacher_button;
     QMenuBar *menuBar;
     QMenu *menuAdd_content;
     QStatusBar *statusBar;
@@ -104,10 +111,15 @@ public:
         verticalLayout_3 = new QVBoxLayout();
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
-        treeView = new QTreeView(horizontalLayoutWidget);
-        treeView->setObjectName(QString::fromUtf8("treeView"));
+        label_3 = new QLabel(horizontalLayoutWidget);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
 
-        verticalLayout_3->addWidget(treeView);
+        verticalLayout_3->addWidget(label_3);
+
+        groups_tree = new QTreeView(horizontalLayoutWidget);
+        groups_tree->setObjectName(QString::fromUtf8("groups_tree"));
+
+        verticalLayout_3->addWidget(groups_tree);
 
 
         horizontalLayout_2->addLayout(verticalLayout_3);
@@ -115,10 +127,21 @@ public:
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setSpacing(6);
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        listView = new QListView(horizontalLayoutWidget);
-        listView->setObjectName(QString::fromUtf8("listView"));
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setSpacing(6);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        label_4 = new QLabel(horizontalLayoutWidget);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
 
-        horizontalLayout_3->addWidget(listView);
+        verticalLayout->addWidget(label_4);
+
+        all_subjects = new QTreeView(horizontalLayoutWidget);
+        all_subjects->setObjectName(QString::fromUtf8("all_subjects"));
+
+        verticalLayout->addWidget(all_subjects);
+
+
+        horizontalLayout_3->addLayout(verticalLayout);
 
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setSpacing(6);
@@ -144,10 +167,21 @@ public:
 
         horizontalLayout_3->addLayout(verticalLayout_2);
 
-        listView_2 = new QListView(horizontalLayoutWidget);
-        listView_2->setObjectName(QString::fromUtf8("listView_2"));
+        verticalLayout_4 = new QVBoxLayout();
+        verticalLayout_4->setSpacing(6);
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        label_5 = new QLabel(horizontalLayoutWidget);
+        label_5->setObjectName(QString::fromUtf8("label_5"));
 
-        horizontalLayout_3->addWidget(listView_2);
+        verticalLayout_4->addWidget(label_5);
+
+        selected_subjects = new QListView(horizontalLayoutWidget);
+        selected_subjects->setObjectName(QString::fromUtf8("selected_subjects"));
+
+        verticalLayout_4->addWidget(selected_subjects);
+
+
+        horizontalLayout_3->addLayout(verticalLayout_4);
 
 
         horizontalLayout_2->addLayout(horizontalLayout_3);
@@ -163,42 +197,44 @@ public:
 
         gridLayout->addWidget(groups_button, 0, 0, 1, 1);
 
-        horizontalLayout_4 = new QHBoxLayout();
-        horizontalLayout_4->setSpacing(6);
-        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
-        horizontalLayout_4->setSizeConstraint(QLayout::SetMaximumSize);
+        gridLayout_2 = new QGridLayout();
+        gridLayout_2->setSpacing(6);
+        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
+        rooms_count = new QSpinBox(horizontalLayoutWidget);
+        rooms_count->setObjectName(QString::fromUtf8("rooms_count"));
+        rooms_count->setMinimum(1);
+        rooms_count->setMaximum(999);
+        rooms_count->setValue(10);
+
+        gridLayout_2->addWidget(rooms_count, 0, 1, 1, 1);
+
         label = new QLabel(horizontalLayoutWidget);
         label->setObjectName(QString::fromUtf8("label"));
-        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(label->sizePolicy().hasHeightForWidth());
-        label->setSizePolicy(sizePolicy);
 
-        horizontalLayout_4->addWidget(label);
+        gridLayout_2->addWidget(label, 0, 0, 1, 1);
 
-        room_count = new QSpinBox(horizontalLayoutWidget);
-        room_count->setObjectName(QString::fromUtf8("room_count"));
+        file_name = new QLineEdit(horizontalLayoutWidget);
+        file_name->setObjectName(QString::fromUtf8("file_name"));
 
-        horizontalLayout_4->addWidget(room_count);
+        gridLayout_2->addWidget(file_name, 1, 1, 1, 1);
+
+        label_2 = new QLabel(horizontalLayoutWidget);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+
+        gridLayout_2->addWidget(label_2, 1, 0, 1, 1);
 
 
-        gridLayout->addLayout(horizontalLayout_4, 3, 0, 1, 1);
+        gridLayout->addLayout(gridLayout_2, 2, 0, 1, 1);
+
+        run_calculation = new QPushButton(horizontalLayoutWidget);
+        run_calculation->setObjectName(QString::fromUtf8("run_calculation"));
+
+        gridLayout->addWidget(run_calculation, 3, 0, 3, 1);
 
         teacher_button = new QPushButton(horizontalLayoutWidget);
         teacher_button->setObjectName(QString::fromUtf8("teacher_button"));
 
         gridLayout->addWidget(teacher_button, 1, 0, 1, 1);
-
-        filename_button = new QPushButton(horizontalLayoutWidget);
-        filename_button->setObjectName(QString::fromUtf8("filename_button"));
-
-        gridLayout->addWidget(filename_button, 2, 0, 1, 1);
-
-        run_calculation = new QPushButton(horizontalLayoutWidget);
-        run_calculation->setObjectName(QString::fromUtf8("run_calculation"));
-
-        gridLayout->addWidget(run_calculation, 4, 0, 3, 1);
 
 
         horizontalLayout->addLayout(gridLayout);
@@ -218,8 +254,6 @@ public:
         menuBar->addAction(menuAdd_content->menuAction());
         menuAdd_content->addAction(actionAdd_group_profile);
         menuAdd_content->addAction(actionAdd_teacher_profile);
-        menuAdd_content->addAction(actionSet_Room_Count);
-        menuAdd_content->addAction(actionExport_file_name);
 
         retranslateUi(MainWindow);
 
@@ -237,13 +271,17 @@ public:
         actionExport_As->setText(QApplication::translate("MainWindow", "Export As...", 0, QApplication::UnicodeUTF8));
         actionExport_file_name->setText(QApplication::translate("MainWindow", "Set Export Filename", 0, QApplication::UnicodeUTF8));
         actionSet_Room_Count->setText(QApplication::translate("MainWindow", "Set Room Count...", 0, QApplication::UnicodeUTF8));
+        label_3->setText(QApplication::translate("MainWindow", "Groups:", 0, QApplication::UnicodeUTF8));
+        label_4->setText(QApplication::translate("MainWindow", "All Subjects:", 0, QApplication::UnicodeUTF8));
         add_arrow->setText(QString());
         remove_arrow->setText(QString());
+        label_5->setText(QApplication::translate("MainWindow", "Selected Subjects:", 0, QApplication::UnicodeUTF8));
         groups_button->setText(QApplication::translate("MainWindow", "Groups", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("MainWindow", "Room Count", 0, QApplication::UnicodeUTF8));
-        teacher_button->setText(QApplication::translate("MainWindow", "Teachers/Subjects", 0, QApplication::UnicodeUTF8));
-        filename_button->setText(QApplication::translate("MainWindow", "Export Filename", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("MainWindow", "Room count:", 0, QApplication::UnicodeUTF8));
+        file_name->setText(QApplication::translate("MainWindow", "res.csv", 0, QApplication::UnicodeUTF8));
+        label_2->setText(QApplication::translate("MainWindow", "Results:", 0, QApplication::UnicodeUTF8));
         run_calculation->setText(QApplication::translate("MainWindow", "Run Calculation", 0, QApplication::UnicodeUTF8));
+        teacher_button->setText(QApplication::translate("MainWindow", "Teachers/Subjects", 0, QApplication::UnicodeUTF8));
         menuAdd_content->setTitle(QApplication::translate("MainWindow", "File", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

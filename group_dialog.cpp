@@ -12,9 +12,11 @@ group_dialog::group_dialog(database *db, QWidget *parent) :
 
   m_model = std::make_unique<QStandardItemModel>(this);
   fill_the_model ();
+  ui->treeView->header()->hide();
   ui->treeView->setModel(m_model.get ());
 
   connect (ui->add_group_button, SIGNAL (clicked ()), this, SLOT(add_button_clicked ()));
+  connect (ui->remove_group_button, SIGNAL (clicked ()), this, SLOT(remove_group()));
   connect (ui->cource, SIGNAL (editingFinished ()), this, SLOT (course_changed ()));
   connect (ui->number, SIGNAL (editingFinished ()), this, SLOT (num_changed ()));
   connect (ui->tread, SIGNAL (editingFinished ()), this, SLOT (thread_changed ()));
@@ -26,6 +28,18 @@ group_dialog::~group_dialog()
 {
   delete ui;
 }
+
+void group_dialog::remove_group ()
+{
+  auto selected = ui->treeView->currentIndex ();
+  if (!selected.isValid ())
+    return;
+  int idx = m_model->data(selected, Qt::UserRole + 1).toInt ();
+  m_db->m_groups->remove (idx);
+
+  fill_the_model ();
+}
+
 
 void group_dialog::fill_the_model()
 {
