@@ -16,7 +16,6 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     group_profile.cpp \
     teacher_profile.cpp \
-    room_profile.cpp \
     group_dialog.cpp \
     database.cpp \
     teacher_dialog.cpp \
@@ -26,7 +25,6 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     group_profile.h \
     teacher_profile.h \
-    room_profile.h \
     group_dialog.h \
     database.h \
     teacher_dialog.h \

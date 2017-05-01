@@ -51,11 +51,10 @@ void group_dialog::fill_the_model()
           cources = m_db->m_groups->get_data (val).get_cource ();
         }
     }
-  cources++;
   m_model->clear();
   QStandardItem *parent_item = m_model->invisibleRootItem();
   std::vector<QStandardItem *> cource_items;
-  for (int i = 0; i < cources; i++)
+  for (int i = 1; i < cources + 1; i++)
     {
       QStandardItem *item = new QStandardItem();
       cource_items.push_back (item);
@@ -69,7 +68,7 @@ void group_dialog::fill_the_model()
       auto group = m_db->m_groups->get_data (val);
       item->setText (QString ("Group %1%2").arg (group.get_thread ()).arg (group.get_group_num ()));
       item->setData (QVariant (group.get_group_id ()));
-      cource_items[group.get_cource ()]->appendRow (item);
+      cource_items[group.get_cource () - 1]->appendRow (item);
     }
 }
 

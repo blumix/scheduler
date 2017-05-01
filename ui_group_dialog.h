@@ -43,6 +43,7 @@ public:
     QLabel *label_3;
     QSpinBox *number;
     QLabel *label_4;
+    QVBoxLayout *verticalLayout_2;
     QPushButton *add_group_button;
     QPushButton *remove_group_button;
 
@@ -88,6 +89,7 @@ public:
 
         cource = new QSpinBox(horizontalLayoutWidget);
         cource->setObjectName(QString::fromUtf8("cource"));
+        cource->setMinimum(1);
 
         formLayout->setWidget(2, QFormLayout::FieldRole, cource);
 
@@ -98,6 +100,7 @@ public:
 
         number = new QSpinBox(horizontalLayoutWidget);
         number->setObjectName(QString::fromUtf8("number"));
+        number->setMinimum(1);
 
         formLayout->setWidget(0, QFormLayout::FieldRole, number);
 
@@ -109,15 +112,20 @@ public:
 
         verticalLayout->addLayout(formLayout);
 
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         add_group_button = new QPushButton(horizontalLayoutWidget);
         add_group_button->setObjectName(QString::fromUtf8("add_group_button"));
 
-        verticalLayout->addWidget(add_group_button);
+        verticalLayout_2->addWidget(add_group_button);
 
         remove_group_button = new QPushButton(horizontalLayoutWidget);
         remove_group_button->setObjectName(QString::fromUtf8("remove_group_button"));
 
-        verticalLayout->addWidget(remove_group_button);
+        verticalLayout_2->addWidget(remove_group_button);
+
+
+        verticalLayout->addLayout(verticalLayout_2);
 
 
         horizontalLayout->addLayout(verticalLayout);
