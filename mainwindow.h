@@ -20,16 +20,25 @@ class MainWindow : public QMainWindow
 public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
+
 private slots:
   void teacher_changed_clicked();
   void group_changed_clicked ();
   void fill_all_teachers_model();
-private:
+  void fill_selected_model();
   void fill_groups_model ();
+  void select_subj();
+  void remove_subj();
 
+private:
+  void reset_selection();
+  void reset_models();
+
+private:
   Ui::MainWindow *ui;
   std::unique_ptr<database> m_db;
   std::unique_ptr<QStandardItemModel> m_all_teachers_model;
+  std::unique_ptr<QStandardItemModel> m_selected_model;
   std::unique_ptr<QStandardItemModel> m_groups_model;
 };
 

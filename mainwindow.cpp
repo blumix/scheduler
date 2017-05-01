@@ -14,22 +14,26 @@ MainWindow::MainWindow(QWidget *parent) :
   m_db = std::make_unique<database> ();
   m_groups_model = std::make_unique<QStandardItemModel> (this);
   m_all_teachers_model = std::make_unique<QStandardItemModel> (this);
-
-
-  if (!connect (ui->actionAdd_group_profile, SIGNAL (triggered()), this, SLOT (group_changed_clicked ()) ))
-    qDebug() <<"connection failed!";
-  if (!connect (ui->actionAdd_teacher_profile, SIGNAL (triggered()), this, SLOT (teacher_changed_clicked ()) ))
-    qDebug() <<"connection failed!";
-  if (!connect (ui->groups_button, SIGNAL (clicked ()), this, SLOT (group_changed_clicked ()) ))
-    qDebug() <<"connection failed!";
-  if (!connect (ui->teacher_button, SIGNAL (clicked()), this, SLOT (teacher_changed_clicked ()) ))
-    qDebug() <<"connection failed!";
+  m_selected_model = std::make_unique<QStandardItemModel> (this);
 
   ui->groups_tree->header()->hide();
   ui->groups_tree->setModel (m_groups_model.get ());
 
   ui->all_subjects->header()->hide();
   ui->all_subjects->setModel (m_all_teachers_model.get ());
+
+  ui->selected_subjects->setModel (m_selected_model.get ());
+
+  connect (ui->actionAdd_group_profile, SIGNAL (triggered()), this, SLOT (group_changed_clicked ()) );
+  connect (ui->actionAdd_teacher_profile, SIGNAL (triggered()), this, SLOT (teacher_changed_clicked ()) );
+  connect (ui->groups_button, SIGNAL (clicked ()), this, SLOT (group_changed_clicked ()) );
+  connect (ui->teacher_button, SIGNAL (clicked()), this, SLOT (teacher_changed_clicked ()) );
+  connect (ui->add_arrow, SIGNAL (clicked()), this, SLOT (select_subj ()));
+  connect (ui->remove_arrow, SIGNAL (clicked()), this, SLOT (remove_subj ()));
+
+  connect (ui->groups_tree->selectionModel (), SIGNAL (selectionChanged (const QItemSelection, const QItemSelection)),
+           this, SLOT (fill_selected_model ()));
+
 }
 
 MainWindow::~MainWindow()
@@ -41,8 +45,69 @@ void MainWindow::group_changed_clicked()
 {
   group_dialog dlg (m_db.get (), this);
   dlg.exec ();
-  fill_groups_model ();
-  fill_all_teachers_model();
+  reset_models();
+}
+
+
+void MainWindow::reset_selection ()
+{
+  for (const auto &val : m_db->m_groups->get_ids ())
+    {
+      m_db->m_groups->get_data (val).get_mutable_lessons().clear ();
+    }
+}
+
+void MainWindow::remove_subj ()
+{
+  auto selected = ui->all_subjects->currentIndex ();
+  if (!selected.isValid ())
+    return;
+
+  auto selected_group = ui->groups_tree->currentIndex ();
+  if (!selected_group.isValid ())
+    return;
+  QVariant data_group = m_groups_model->data(selected_group, Qt::UserRole + 1);
+  int id_group = data_group.toInt ();
+  if (id_group < 0)
+    return;
+
+
+  auto &lessons = m_db->m_groups->get_data(id_group).get_mutable_lessons();
+  lessons.erase (lessons.begin () + selected.row ());
+  fill_selected_model ();
+
+}
+
+void MainWindow::select_subj ()
+{
+  auto selected = ui->all_subjects->currentIndex ();
+  if (!selected.isValid ())
+    return;
+  QVariant data = m_all_teachers_model->data(selected, Qt::UserRole + 1);
+  int id = data.toInt ();
+  if (id < 0)
+    return;
+
+  int row = selected.row ();
+
+  const auto &id_data = m_db->m_teachers->get_data (id);
+  QString str = id_data.get_name ();
+  str += " (";
+  str += id_data.get_subjects()[row];
+  str += ")";
+
+  auto selected_group = ui->groups_tree->currentIndex ();
+  if (!selected_group.isValid ())
+    return;
+  QVariant data_group = m_groups_model->data(selected_group, Qt::UserRole + 1);
+  int id_group = data_group.toInt ();
+  if (id_group < 0)
+    return;
+
+  m_db->m_groups->get_data(id_group).get_mutable_lessons().
+      push_back ({str, id});
+
+  fill_selected_model ();
 }
 
 void MainWindow::fill_groups_model()
@@ -82,7 +147,6 @@ void MainWindow::fill_all_teachers_model()
   auto teachers = m_db->m_teachers.get ();
   m_all_teachers_model->clear();
   QStandardItem *parent_item = m_all_teachers_model->invisibleRootItem();
-  std::vector<QStandardItem *> teacher;
   for (const auto &elem : m_db->m_teachers->get_ids ())
     {
       QStandardItem *item = new QStandardItem();
@@ -101,10 +165,43 @@ void MainWindow::fill_all_teachers_model()
 }
 
 
+void MainWindow::fill_selected_model()
+{
+  m_selected_model->clear();
+
+  auto selected = ui->groups_tree->currentIndex ();
+  if (!selected.isValid ())
+    return;
+  QVariant data = m_groups_model->data(selected, Qt::UserRole + 1);
+  int group_id = data.toInt ();
+  if (group_id < 0)
+    return;
+
+
+  QStandardItem *subj_parent_item = m_selected_model->invisibleRootItem();
+  for (const auto &elem: m_db->m_groups->get_data (group_id).get_mutable_lessons ())
+    {
+      QStandardItem *item = new QStandardItem();
+      item->setText (elem.first);
+      item->setData (elem.second);
+      subj_parent_item->appendRow (item);
+    }
+}
+
+
+
+void MainWindow::reset_models()
+{
+  reset_selection ();
+  fill_groups_model ();
+  fill_all_teachers_model();
+  fill_selected_model ();
+}
 
 void MainWindow::teacher_changed_clicked()
 {
   teacher_dialog dlg (m_db.get (), this);
   dlg.exec ();
+  reset_models();
 }
 
