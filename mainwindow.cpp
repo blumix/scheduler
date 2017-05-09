@@ -57,7 +57,7 @@ void MainWindow::reset_selection ()
 {
   for (const auto &val : m_db->m_groups->get_ids ())
     {
-      m_db->m_groups->get_data (val).get_mutable_lessons().clear ();
+      m_db->m_groups->get_data (val).get_lessons().clear ();
     }
 }
 
@@ -76,7 +76,7 @@ void MainWindow::remove_subj ()
     return;
 
 
-  auto &lessons = m_db->m_groups->get_data(id_group).get_mutable_lessons();
+  auto &lessons = m_db->m_groups->get_data(id_group).get_lessons();
   lessons.erase (lessons.begin () + selected.row ());
   fill_selected_model ();
 
@@ -89,7 +89,7 @@ void MainWindow::run_calculation ()
 
   for (const auto &val : m_db->m_groups->get_ids ())
     {
-      auto lessons = m_db->m_groups->get_data (val).get_mutable_lessons ();
+      auto lessons = m_db->m_groups->get_data (val).get_lessons ();
 
       int lesson_id = 0;
       for (const auto &lesson : lessons)
@@ -109,9 +109,10 @@ void MainWindow::run_calculation ()
   for (const auto &set : result)
     {
       for (const auto &lesson_id : set)
-        m_db->m_result_schedule[idx].push_back (lesson_id);
+        m_db->m_result_schedule[idx].push_back ({0,lesson_id});
       idx++;
     }
+  m_db->export_results (ui->file_name->text ());
   qDebug() << "Succesfully calculated!";
 }
 
@@ -141,7 +142,7 @@ void MainWindow::select_subj ()
   if (id_group < 0)
     return;
 
-  m_db->m_groups->get_data(id_group).get_mutable_lessons().push_back ({str, id});
+  m_db->m_groups->get_data(id_group).get_lessons().push_back ({str, id});
   fill_selected_model ();
 }
 
@@ -214,7 +215,7 @@ void MainWindow::fill_selected_model ()
 
 
   QStandardItem *subj_parent_item = m_selected_model->invisibleRootItem();
-  for (const auto &elem: m_db->m_groups->get_data (group_id).get_mutable_lessons ())
+  for (const auto &elem: m_db->m_groups->get_data (group_id).get_lessons ())
     {
       QStandardItem *item = new QStandardItem();
       item->setText (elem.first);

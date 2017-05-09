@@ -17,7 +17,8 @@ public:
   void set_cource (int course) {m_ed_year = course;}
   void set_num (int num) {m_group_num = num;}
   void set_thread (int thread) {m_thread = thread;}
-  std::vector<std::pair <QString, int>> &get_mutable_lessons() {return m_lessons;}
+  std::vector<std::pair <QString, int>> &get_lessons() {return m_lessons;}
+  const std::vector<std::pair <QString, int>> &get_lessons() const {return m_lessons;}
 private:
   int m_group_id = -1;
   int m_group_num = 1;

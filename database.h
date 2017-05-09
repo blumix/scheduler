@@ -17,7 +17,9 @@ public:
   std::unique_ptr<index_table<group_profile>> m_groups;
   std::unique_ptr<index_table<teacher_profile>> m_teachers;
 
-  std::vector<std::vector<int>> m_result_schedule;
+  std::vector<std::vector<std::pair<int,int>>> m_result_schedule;
+
+  void export_results (QString filename);
 };
 
 #endif // DATABASE_H
