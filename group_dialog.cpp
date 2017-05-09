@@ -46,9 +46,9 @@ void group_dialog::fill_the_model()
   int cources = 0;
   for (const auto &val : m_db->m_groups->get_ids ())
     {
-      if (cources < m_db->m_groups->get_data (val).get_cource ())
+      if (cources < m_db->m_groups->get_data (val).get_course ())
         {
-          cources = m_db->m_groups->get_data (val).get_cource ();
+          cources = m_db->m_groups->get_data (val).get_course ();
         }
     }
   m_model->clear();
@@ -68,7 +68,7 @@ void group_dialog::fill_the_model()
       auto group = m_db->m_groups->get_data (val);
       item->setText (QString ("Group %1%2").arg (group.get_thread ()).arg (group.get_group_num ()));
       item->setData (QVariant (group.get_group_id ()));
-      cource_items[group.get_cource () - 1]->appendRow (item);
+      cource_items[group.get_course () - 1]->appendRow (item);
     }
 }
 
@@ -148,7 +148,7 @@ void group_dialog::selection_changed ()
     return;
 
   auto group = m_db->m_groups->get_data (group_id);
-  ui->cource->setValue (group.get_cource ());
+  ui->cource->setValue (group.get_course ());
   ui->number->setValue (group.get_group_num ());
   ui->tread->setValue (group.get_thread ());
 }

@@ -2,7 +2,10 @@
 #include "teacher_dialog.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "kernel/tree_solver.h"
+#include "kernel/common_defines.h"
 
+#include <iostream>
 #include <QStandardItemModel>
 #include <QDebug>
 
@@ -30,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
   connect (ui->teacher_button, SIGNAL (clicked()), this, SLOT (teacher_changed_clicked ()) );
   connect (ui->add_arrow, SIGNAL (clicked()), this, SLOT (select_subj ()));
   connect (ui->remove_arrow, SIGNAL (clicked()), this, SLOT (remove_subj ()));
+  connect (ui->run_calculation, SIGNAL (clicked()), this, SLOT (run_calculation ()));
 
   connect (ui->groups_tree->selectionModel (), SIGNAL (selectionChanged (const QItemSelection, const QItemSelection)),
            this, SLOT (fill_selected_model ()));
@@ -78,12 +82,45 @@ void MainWindow::remove_subj ()
 
 }
 
+void MainWindow::run_calculation ()
+{
+  // init tree_node vector
+  std::vector<tree_node> input_vector;
+
+  for (const auto &val : m_db->m_groups->get_ids ())
+    {
+      auto lessons = m_db->m_groups->get_data (val).get_mutable_lessons ();
+
+      int lesson_id = 0;
+      for (const auto &lesson : lessons)
+        {
+          int course_id = lesson_id++;
+          int group_id = m_db->m_groups->get_data (val).get_group_id ();
+          int teacher_id = lesson.second;
+          tree_node curr_node (course_id, group_id, teacher_id);
+          input_vector.push_back (curr_node);
+        }
+    }
+
+  tree_solver solver;
+  auto result = solver.calculate (input_vector);
+
+  int idx = 0;
+  for (const auto &set : result)
+    {
+      for (const auto &lesson_id : set)
+        m_db->m_result_schedule[idx].push_back (lesson_id);
+      idx++;
+    }
+  qDebug() << "Succesfully calculated!";
+}
+
 void MainWindow::select_subj ()
 {
   auto selected = ui->all_subjects->currentIndex ();
   if (!selected.isValid ())
     return;
-  QVariant data = m_all_teachers_model->data(selected, Qt::UserRole + 1);
+  QVariant data = m_all_teachers_model->data (selected, Qt::UserRole + 1);
   int id = data.toInt ();
   if (id < 0)
     return;
@@ -104,9 +141,7 @@ void MainWindow::select_subj ()
   if (id_group < 0)
     return;
 
-  m_db->m_groups->get_data(id_group).get_mutable_lessons().
-      push_back ({str, id});
-
+  m_db->m_groups->get_data(id_group).get_mutable_lessons().push_back ({str, id});
   fill_selected_model ();
 }
 
@@ -115,9 +150,9 @@ void MainWindow::fill_groups_model()
   int cources = 0;
   for (const auto &val : m_db->m_groups->get_ids ())
     {
-      if (cources < m_db->m_groups->get_data (val).get_cource ())
+      if (cources < m_db->m_groups->get_data (val).get_course ())
         {
-          cources = m_db->m_groups->get_data (val).get_cource ();
+          cources = m_db->m_groups->get_data (val).get_course ();
         }
     }
   m_groups_model->clear();
@@ -137,7 +172,7 @@ void MainWindow::fill_groups_model()
       auto group = m_db->m_groups->get_data (val);
       item->setText (QString ("Group %1%2").arg (group.get_thread ()).arg (group.get_group_num ()));
       item->setData (QVariant (group.get_group_id ()));
-      cource_items[group.get_cource () - 1]->appendRow (item);
+      cource_items[group.get_course () - 1]->appendRow (item);
     }
 }
 
@@ -165,7 +200,7 @@ void MainWindow::fill_all_teachers_model()
 }
 
 
-void MainWindow::fill_selected_model()
+void MainWindow::fill_selected_model ()
 {
   m_selected_model->clear();
 

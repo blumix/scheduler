@@ -29,6 +29,7 @@ private slots:
   void fill_groups_model ();
   void select_subj();
   void remove_subj();
+  void run_calculation();
 
 private:
   void reset_selection();

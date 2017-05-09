@@ -65,7 +65,7 @@ void tree_solver::set_colors ()
 //      std::cout << "(" << elem.first.group_id << " " << elem.first.room_id << " " << elem.first.teacher_id << ") Color="
 //                << m_colors[elem.first] << std::endl;
 //      print_vector (elem.second);
-  //    }
+//    }
 }
 
 std::vector<std::unordered_set<uid>> tree_solver::get_result_timetable_set ()

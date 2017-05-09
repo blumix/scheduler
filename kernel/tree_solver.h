@@ -12,17 +12,16 @@ struct tree_node
 {
   uid course_id = 0;
   int group_id = 0;
-  int room_id = 0;
   int teacher_id = 0;
 
-  tree_node (int course_uid, int g_id = -1, int r_id = -1, int t_id = -1)
-    : course_id (course_uid), group_id (g_id), room_id (r_id), teacher_id (t_id)
+  tree_node (int course_uid, int g_id = -1, int t_id = -1)
+    : course_id (course_uid), group_id (g_id), teacher_id (t_id)
   {
   }
 
   bool is_neighbour (const tree_node &rhs) const
   {
-    return ((room_id == rhs.room_id) || (group_id == rhs.group_id) || (teacher_id == rhs.teacher_id));
+    return ((group_id == rhs.group_id) || (teacher_id == rhs.teacher_id));
   }
 };
 

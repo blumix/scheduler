@@ -13,7 +13,7 @@ public:
   const std::vector<QString> &get_subjects() const {return m_subjects;}
 
   std::vector<QString> &get_subjects() {return m_subjects;}
-  void set_name (QString  name) {m_name = name;}
+  void set_name (QString name) {m_name = name;}
 private:
   int m_id = 0;
   std::vector<QString> m_subjects;
