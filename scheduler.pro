@@ -38,3 +38,7 @@ FORMS    += mainwindow.ui \
     teacher_dialog.ui
 
 QMAKE_CXXFLAGS += -std=c++14
+
+DISTFILES += \
+    right-arrow.png \
+    left-arrow.png
