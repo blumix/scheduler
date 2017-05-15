@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     database.cpp \
     teacher_dialog.cpp \
     kernel/tree_solver.cpp \
-    index_table.cpp
+    index_table.cpp \
+    kernel/greedy_search_solution.cpp
 
 HEADERS  += mainwindow.h \
     group_profile.h \
@@ -31,7 +32,8 @@ HEADERS  += mainwindow.h \
     kernel/tree_solver.h \
     kernel/common_defines.h \
     kernel/common_defines.h \
-    index_table.h
+    index_table.h \
+    kernel/greedy_search_solution.h
 
 FORMS    += mainwindow.ui \
     group_dialog.ui \

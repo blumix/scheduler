@@ -4,6 +4,7 @@
 #include "ui_mainwindow.h"
 #include "kernel/tree_solver.h"
 #include "kernel/common_defines.h"
+#include "kernel/greedy_search_solution.h"
 
 #include <iostream>
 #include <QStandardItemModel>
@@ -114,6 +115,7 @@ void MainWindow::run_calculation ()
     }
   m_db->export_results (ui->file_name->text ());
   qDebug() << "Succesfully calculated!";
+  search_best_solution (result);
 }
 
 void MainWindow::select_subj ()
