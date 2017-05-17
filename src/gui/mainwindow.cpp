@@ -184,6 +184,7 @@ void MainWindow::fill_groups_model()
       item->setData (QVariant (group.get_group_id ()));
       cource_items[group.get_course () - 1]->appendRow (item);
     }
+  ui->groups_tree->expandAll ();
 }
 
 
@@ -207,6 +208,7 @@ void MainWindow::fill_all_teachers_model()
           item->appendRow (sub_item);
         }
     }
+  ui->all_subjects->expandAll ();
 }
 
 

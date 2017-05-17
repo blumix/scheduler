@@ -20,172 +20,166 @@
      <height>334</height>
     </size>
    </property>
-   <widget class="QWidget" name="horizontalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>1005</width>
-      <height>531</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <property name="sizeConstraint">
-      <enum>QLayout::SetMinimumSize</enum>
-     </property>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
-         <item>
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>Groups:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QTreeView" name="groups_tree"/>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout">
-           <item>
-            <widget class="QLabel" name="label_4">
-             <property name="text">
-              <string>All Subjects:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QTreeView" name="all_subjects"/>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
-           <item>
-            <widget class="QPushButton" name="add_arrow">
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="../../res.qrc">
-               <normaloff>:/img/right-arrow.png</normaloff>:/img/right-arrow.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="remove_arrow">
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="../../res.qrc">
-               <normaloff>:/img/left-arrow.png</normaloff>:/img/left-arrow.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_4">
-           <item>
-            <widget class="QLabel" name="label_5">
-             <property name="text">
-              <string>Selected Subjects:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QListView" name="selected_subjects"/>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QPushButton" name="groups_button">
-         <property name="text">
-          <string>Groups</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <layout class="QGridLayout" name="gridLayout_2">
-         <item row="0" column="1">
-          <widget class="QSpinBox" name="rooms_count">
-           <property name="minimum">
-            <number>1</number>
-           </property>
-           <property name="maximum">
-            <number>999</number>
-           </property>
-           <property name="value">
-            <number>10</number>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>Room count:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="file_name">
-           <property name="text">
-            <string>res.csv</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>Results:</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="3" column="0" rowspan="3">
-        <widget class="QPushButton" name="run_calculation">
-         <property name="text">
-          <string>Run Calculation</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="teacher_button">
-         <property name="text">
-          <string>Teachers/Subjects</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
+   <layout class="QVBoxLayout" name="verticalLayout_5">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMinimumSize</enum>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Groups:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QTreeView" name="groups_tree"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string>All Subjects:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTreeView" name="all_subjects"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <widget class="QPushButton" name="add_arrow">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../../res.qrc">
+                <normaloff>:/img/right-arrow.png</normaloff>:/img/right-arrow.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>32</width>
+                <height>32</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="remove_arrow">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../../res.qrc">
+                <normaloff>:/img/left-arrow.png</normaloff>:/img/left-arrow.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>32</width>
+                <height>32</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <item>
+             <widget class="QLabel" name="label_5">
+              <property name="text">
+               <string>Selected Subjects:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QListView" name="selected_subjects"/>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QPushButton" name="groups_button">
+          <property name="text">
+           <string>Groups</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="rooms_count">
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>999</number>
+            </property>
+            <property name="value">
+             <number>10</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Room count:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="file_name">
+            <property name="text">
+             <string>res.csv</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Results:</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="3" column="0" rowspan="3">
+         <widget class="QPushButton" name="run_calculation">
+          <property name="text">
+           <string>Run Calculation</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="teacher_button">
+          <property name="text">
+           <string>Teachers/Subjects</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

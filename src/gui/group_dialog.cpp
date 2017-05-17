@@ -70,6 +70,7 @@ void group_dialog::fill_the_model()
       item->setData (QVariant (group.get_group_id ()));
       cource_items[group.get_course () - 1]->appendRow (item);
     }
+  ui->treeView->expandAll ();
 }
 
 void group_dialog::add_button_clicked()
