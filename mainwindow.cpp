@@ -3,7 +3,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "kernel/tree_solver.h"
-#include "kernel/common_defines.h"
 #include "kernel/greedy_search_solution.h"
 
 #include <iostream>
@@ -106,16 +105,9 @@ void MainWindow::run_calculation ()
   tree_solver solver;
   auto result = solver.calculate (input_vector);
 
-  int idx = 0;
-  for (const auto &set : result)
-    {
-      for (const auto &lesson_id : set)
-        m_db->m_result_schedule[idx].push_back ({0,lesson_id});
-      idx++;
-    }
   m_db->export_results (ui->file_name->text ());
   qDebug() << "Succesfully calculated!";
-  search_best_solution (result);
+  m_db->m_result_schedule = search_best_solution (result, m_db->m_groups->get_ids ().size ());
 }
 
 void MainWindow::select_subj ()
