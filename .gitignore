@@ -4,3 +4,4 @@ moc_*
 scheduler
 Makefile
 *.orig
+ui_*
