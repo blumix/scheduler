@@ -2,6 +2,7 @@
 #define TEACHER_PROFILE_H
 
 #include <QString>
+#include <vector>
 
 
 class teacher_profile
