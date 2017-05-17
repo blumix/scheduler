@@ -41,6 +41,8 @@ FORMS    += mainwindow.ui \
 
 QMAKE_CXXFLAGS += -std=c++14
 
+LIBS += -lsqlite3
+
 DISTFILES += \
     right-arrow.png \
     left-arrow.png

@@ -30,6 +30,8 @@ private slots:
   void select_subj();
   void remove_subj();
   void run_calculation();
+  void save();
+  void load();
 
 private:
   void reset_selection();

@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
   connect (ui->actionAdd_group_profile, SIGNAL (triggered()), this, SLOT (group_changed_clicked ()) );
   connect (ui->actionAdd_teacher_profile, SIGNAL (triggered()), this, SLOT (teacher_changed_clicked ()) );
+  connect (ui->save, SIGNAL (triggered()), this, SLOT (save ()) );
+  connect (ui->load, SIGNAL (triggered()), this, SLOT (load ()) );
   connect (ui->groups_button, SIGNAL (clicked ()), this, SLOT (group_changed_clicked ()) );
   connect (ui->teacher_button, SIGNAL (clicked()), this, SLOT (teacher_changed_clicked ()) );
   connect (ui->add_arrow, SIGNAL (clicked()), this, SLOT (select_subj ()));
@@ -44,6 +46,19 @@ MainWindow::~MainWindow()
 {
   delete ui;
 }
+
+void MainWindow::save ()
+{
+  m_db->save_to_sql_db();
+}
+
+
+void MainWindow::load ()
+{
+  m_db->load_from_sql_db();
+  reset_models();
+}
+
 
 void MainWindow::group_changed_clicked()
 {

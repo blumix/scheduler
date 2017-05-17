@@ -10,6 +10,17 @@
 #include <bits/unique_ptr.h>
 
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <sqlite3.h>
+
+
+
+int  callback_for_group (void *v_groups, int argc, char **argv, char **);
+void callback_for_teacher ();
+void callback_for_lesson  ();
+
+
 class database
 {
 public:
@@ -18,6 +29,13 @@ public:
   std::unique_ptr<index_table<teacher_profile>> m_teachers;
 
   std::vector<std::vector<std::pair<int,int>>> m_result_schedule;
+
+  void save_to_sql_db ();
+  void load_from_sql_db ();
+
+  std::string get_sql_for_groups();
+
+
 
   void export_results (QString filename);
 };

@@ -42,6 +42,8 @@ public:
     QAction *actionExport_As;
     QAction *actionExport_file_name;
     QAction *actionSet_Room_Count;
+    QAction *save;
+    QAction *load;
     QWidget *centralWidget;
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout;
@@ -93,12 +95,16 @@ public:
         actionExport_file_name->setObjectName(QString::fromUtf8("actionExport_file_name"));
         actionSet_Room_Count = new QAction(MainWindow);
         actionSet_Room_Count->setObjectName(QString::fromUtf8("actionSet_Room_Count"));
+        save = new QAction(MainWindow);
+        save->setObjectName(QString::fromUtf8("save"));
+        load = new QAction(MainWindow);
+        load->setObjectName(QString::fromUtf8("load"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         centralWidget->setMinimumSize(QSize(685, 334));
         horizontalLayoutWidget = new QWidget(centralWidget);
         horizontalLayoutWidget->setObjectName(QString::fromUtf8("horizontalLayoutWidget"));
-        horizontalLayoutWidget->setGeometry(QRect(0, 0, 951, 531));
+        horizontalLayoutWidget->setGeometry(QRect(0, 0, 1005, 531));
         horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
@@ -254,6 +260,9 @@ public:
         menuBar->addAction(menuAdd_content->menuAction());
         menuAdd_content->addAction(actionAdd_group_profile);
         menuAdd_content->addAction(actionAdd_teacher_profile);
+        menuAdd_content->addSeparator();
+        menuAdd_content->addAction(save);
+        menuAdd_content->addAction(load);
 
         retranslateUi(MainWindow);
 
@@ -271,6 +280,8 @@ public:
         actionExport_As->setText(QApplication::translate("MainWindow", "Export As...", 0, QApplication::UnicodeUTF8));
         actionExport_file_name->setText(QApplication::translate("MainWindow", "Set Export Filename", 0, QApplication::UnicodeUTF8));
         actionSet_Room_Count->setText(QApplication::translate("MainWindow", "Set Room Count...", 0, QApplication::UnicodeUTF8));
+        save->setText(QApplication::translate("MainWindow", "save", 0, QApplication::UnicodeUTF8));
+        load->setText(QApplication::translate("MainWindow", "load", 0, QApplication::UnicodeUTF8));
         label_3->setText(QApplication::translate("MainWindow", "Groups:", 0, QApplication::UnicodeUTF8));
         label_4->setText(QApplication::translate("MainWindow", "All Subjects:", 0, QApplication::UnicodeUTF8));
         add_arrow->setText(QString());
