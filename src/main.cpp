@@ -4,9 +4,9 @@
 #include "src/kernel/tree_solver.h"
 #include <iostream>
 
-int main(int argc, char *argv[])
+int main (int argc, char *argv[])
 {
-  QApplication a(argc, argv);
+  QApplication a (argc, argv);
   MainWindow w;
   w.show();
 

@@ -9,11 +9,11 @@
 #include <QStandardItemModel>
 #include <QDebug>
 
-MainWindow::MainWindow(QWidget *parent) :
-  QMainWindow(parent),
-  ui(new Ui::MainWindow)
+MainWindow::MainWindow (QWidget *parent) :
+  QMainWindow (parent),
+  ui (new Ui::MainWindow)
 {
-  ui->setupUi(this);
+  ui->setupUi (this);
   m_db = std::make_unique<database> ();
   m_groups_model = std::make_unique<QStandardItemModel> (this);
   m_all_teachers_model = std::make_unique<QStandardItemModel> (this);
@@ -85,13 +85,13 @@ void MainWindow::remove_subj ()
   auto selected_group = ui->groups_tree->currentIndex ();
   if (!selected_group.isValid ())
     return;
-  QVariant data_group = m_groups_model->data(selected_group, Qt::UserRole + 1);
+  QVariant data_group = m_groups_model->data (selected_group, Qt::UserRole + 1);
   int id_group = data_group.toInt ();
   if (id_group < 0)
     return;
 
 
-  auto &lessons = m_db->m_groups->get_data(id_group).get_lessons();
+  auto &lessons = m_db->m_groups->get_data (id_group).get_lessons();
   lessons.erase (lessons.begin () + selected.row ());
   fill_selected_model ();
 
@@ -146,12 +146,12 @@ void MainWindow::select_subj ()
   auto selected_group = ui->groups_tree->currentIndex ();
   if (!selected_group.isValid ())
     return;
-  QVariant data_group = m_groups_model->data(selected_group, Qt::UserRole + 1);
+  QVariant data_group = m_groups_model->data (selected_group, Qt::UserRole + 1);
   int id_group = data_group.toInt ();
   if (id_group < 0)
     return;
 
-  m_db->m_groups->get_data(id_group).get_lessons().push_back ({str, id});
+  m_db->m_groups->get_data (id_group).get_lessons().push_back ({str, id});
   fill_selected_model ();
 }
 
@@ -217,7 +217,7 @@ void MainWindow::fill_selected_model ()
   auto selected = ui->groups_tree->currentIndex ();
   if (!selected.isValid ())
     return;
-  QVariant data = m_groups_model->data(selected, Qt::UserRole + 1);
+  QVariant data = m_groups_model->data (selected, Qt::UserRole + 1);
   int group_id = data.toInt ();
   if (group_id < 0)
     return;
@@ -249,4 +249,3 @@ void MainWindow::teacher_changed_clicked()
   dlg.exec ();
   reset_models();
 }
-

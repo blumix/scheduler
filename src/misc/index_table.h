@@ -17,22 +17,22 @@ public:
   int create_new()
   {
     int id = m_idx;
-    m_table.insert(std::pair<int, T>(id, T(id)));
+    m_table.insert (std::pair<int, T> (id, T (id)));
     m_idx++;
     return id;
   }
 
-  int create_new(int new_id)
+  int create_new (int new_id)
   {
     if (m_table.find (new_id) != m_table.cend ())
       return -1;
     int id = new_id;
-    m_table.insert(std::pair<int, T>(id, T(id)));
+    m_table.insert (std::pair<int, T> (id, T (id)));
     m_idx = new_id + 1;
     return id;
   }
 
-  T &get_data(int id)
+  T &get_data (int id)
   {
     auto res = m_table.find (id);
     assert (res != m_table.end ());

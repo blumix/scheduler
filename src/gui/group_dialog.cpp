@@ -4,19 +4,19 @@
 #include <QStandardItemModel>
 
 
-group_dialog::group_dialog(database *db, QWidget *parent) :
-  QDialog(parent),
-  ui(new Ui::group_dialog), m_db (db)
+group_dialog::group_dialog (database *db, QWidget *parent) :
+  QDialog (parent),
+  ui (new Ui::group_dialog), m_db (db)
 {
-  ui->setupUi(this);
+  ui->setupUi (this);
 
-  m_model = std::make_unique<QStandardItemModel>(this);
+  m_model = std::make_unique<QStandardItemModel> (this);
   fill_the_model ();
   ui->treeView->header()->hide();
-  ui->treeView->setModel(m_model.get ());
+  ui->treeView->setModel (m_model.get ());
 
-  connect (ui->add_group_button, SIGNAL (clicked ()), this, SLOT(add_button_clicked ()));
-  connect (ui->remove_group_button, SIGNAL (clicked ()), this, SLOT(remove_group()));
+  connect (ui->add_group_button, SIGNAL (clicked ()), this, SLOT (add_button_clicked ()));
+  connect (ui->remove_group_button, SIGNAL (clicked ()), this, SLOT (remove_group()));
   connect (ui->cource, SIGNAL (editingFinished ()), this, SLOT (course_changed ()));
   connect (ui->number, SIGNAL (editingFinished ()), this, SLOT (num_changed ()));
   connect (ui->tread, SIGNAL (editingFinished ()), this, SLOT (thread_changed ()));
@@ -34,7 +34,7 @@ void group_dialog::remove_group ()
   auto selected = ui->treeView->currentIndex ();
   if (!selected.isValid ())
     return;
-  int idx = m_model->data(selected, Qt::UserRole + 1).toInt ();
+  int idx = m_model->data (selected, Qt::UserRole + 1).toInt ();
   m_db->m_groups->remove (idx);
 
   fill_the_model ();
@@ -88,7 +88,7 @@ void group_dialog::course_changed ()
   auto selected = ui->treeView->currentIndex ();
   if (!selected.isValid ())
     return;
-  QVariant data = m_model->data(selected, Qt::UserRole + 1);
+  QVariant data = m_model->data (selected, Qt::UserRole + 1);
   int group_id = data.toInt ();
   if (group_id < 0)
     return;
@@ -104,7 +104,7 @@ void group_dialog::num_changed ()
   auto selected = ui->treeView->currentIndex ();
   if (!selected.isValid ())
     return;
-  QVariant data = m_model->data(selected, Qt::UserRole + 1);
+  QVariant data = m_model->data (selected, Qt::UserRole + 1);
   int group_id = data.toInt ();
   if (group_id < 0)
     return;
@@ -119,7 +119,7 @@ void group_dialog::thread_changed ()
   auto selected = ui->treeView->currentIndex ();
   if (!selected.isValid ())
     return;
-  QVariant data = m_model->data(selected, Qt::UserRole + 1);
+  QVariant data = m_model->data (selected, Qt::UserRole + 1);
   int group_id = data.toInt ();
   if (group_id < 0)
     return;
@@ -136,7 +136,7 @@ void group_dialog::selection_changed ()
   auto selected = ui->treeView->currentIndex ();
   if (!selected.isValid ())
     return;
-  QVariant data = m_model->data(selected, Qt::UserRole + 1);
+  QVariant data = m_model->data (selected, Qt::UserRole + 1);
   ui->formLayout->setEnabled (true);
   if (!data.isValid ())
     {

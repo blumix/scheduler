@@ -8,8 +8,9 @@
 
 #include <bits/unique_ptr.h>
 
-namespace Ui {
-  class group_dialog;
+namespace Ui
+{
+class group_dialog;
 }
 
 class group_dialog : public QDialog
@@ -17,7 +18,7 @@ class group_dialog : public QDialog
   Q_OBJECT
 
 public:
-  explicit group_dialog(database *db, QWidget *parent = 0);
+  explicit group_dialog (database *db, QWidget *parent = 0);
   ~group_dialog();
 
 private slots:

@@ -18,9 +18,9 @@ static inline int heuristic_func (const std::vector<std::vector<std::pair<int, i
 }
 
 std::vector<std::vector<std::pair<int, int>>> search_best_solution (
-    const std::vector<std::unordered_set<uid>> &possibilities_sets,
-    size_t group_count
-    )
+  const std::vector<std::unordered_set<uid>> &possibilities_sets,
+  size_t group_count
+)
 {
   auto possibilities_size = possibilities_sets.size ();
 
@@ -33,7 +33,8 @@ std::vector<std::vector<std::pair<int, int>>> search_best_solution (
 
   int min_hf = 1000;
   // print integers and permute bitmask
-  do {
+  do
+    {
       current_schedule.clear ();
       current_schedule.resize (common_defines::all_timeslots);
       for (size_t idx = 0; idx < common_defines::all_timeslots; idx++)
@@ -62,7 +63,8 @@ std::vector<std::vector<std::pair<int, int>>> search_best_solution (
           min_hf = current_hf;
           result_schedule = current_schedule;
         }
-    } while (std::prev_permutation (bitmask.begin (), bitmask.end ()));
+    }
+  while (std::prev_permutation (bitmask.begin (), bitmask.end ()));
 
   return result_schedule;
 }
