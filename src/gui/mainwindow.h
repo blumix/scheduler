@@ -1,7 +1,9 @@
+/// \file src/gui/mainwindow.h
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "database.h"
+#include "src/resources/database.h"
 
 #include <QMainWindow>
 #include <memory>

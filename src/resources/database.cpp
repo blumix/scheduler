@@ -1,8 +1,8 @@
-#include "database.h"
-#include "kernel/common_defines.h"
+#include "src/resources/database.h"
+#include "src/misc/common_defines.h"
 #include <iostream>
 #include <fstream>
-#include "group_profile.h"
+#include "src/resources/group_profile.h"
 
 database::database()
 {

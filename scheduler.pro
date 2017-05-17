@@ -12,37 +12,36 @@ TARGET = scheduler
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    group_profile.cpp \
-    teacher_profile.cpp \
-    group_dialog.cpp \
-    database.cpp \
-    teacher_dialog.cpp \
-    kernel/tree_solver.cpp \
-    index_table.cpp \
-    kernel/greedy_search_solution.cpp
+SOURCES += src/main.cpp\
+           src/gui/group_dialog.cpp \
+           src/gui/mainwindow.cpp \
+           src/gui/teacher_dialog.cpp \
+           src/kernel/greedy_search_solution.cpp \
+           src/kernel/tree_solver.cpp \
+           src/misc/index_table.cpp \
+           src/resources/database.cpp \
+           src/resources/group_profile.cpp \
+           src/resources/teacher_profile.cpp
 
-HEADERS  += mainwindow.h \
-    group_profile.h \
-    teacher_profile.h \
-    group_dialog.h \
-    database.h \
-    teacher_dialog.h \
-    kernel/tree_solver.h \
-    kernel/common_defines.h \
-    kernel/common_defines.h \
-    index_table.h \
-    kernel/greedy_search_solution.h
+HEADERS  += src/gui/group_dialog.h \
+            src/gui/mainwindow.h \
+            src/gui/teacher_dialog.h \
+            src/kernel/greedy_search_solution.h \
+            src/kernel/tree_solver.h \
+            src/misc/common_defines.h \
+            src/misc/index_table.h \
+            src/resources/database.h \
+            src/resources/group_profile.h \
+            src/resources/teacher_profile.h
 
-FORMS    += mainwindow.ui \
-    group_dialog.ui \
-    teacher_dialog.ui
+
+FORMS    += src/gui/group_dialog.ui \
+            src/gui/mainwindow.ui \
+            src/gui/teacher_dialog.ui
 
 QMAKE_CXXFLAGS += -std=c++14
 
 LIBS += -lsqlite3
 
-DISTFILES += \
-    right-arrow.png \
-    left-arrow.png
+DISTFILES += img/right-arrow.png \
+             img/left-arrow.png

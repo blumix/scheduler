@@ -1,7 +1,7 @@
 #ifndef GROUP_DIALOG_H
 #define GROUP_DIALOG_H
 
-#include "database.h"
+#include "src/resources/database.h"
 
 #include <QDialog>
 #include <QStandardItemModel>

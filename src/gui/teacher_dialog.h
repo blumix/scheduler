@@ -1,7 +1,9 @@
+/// \file src/gui/teacher_dialog.h
+
 #ifndef TEACHER_DIALOG_H
 #define TEACHER_DIALOG_H
 
-#include "database.h"
+#include "src/resources/database.h"
 
 #include <QDialog>
 #include <QStandardItemModel>

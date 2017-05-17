@@ -1,7 +1,7 @@
 /// \file kernel/greedy_search_solution.cpp
 
-#include "kernel/greedy_search_solution.h"
-#include "kernel/common_defines.h"
+#include "src/kernel/greedy_search_solution.h"
+#include "src/misc/common_defines.h"
 
 #include <iostream>
 #include <algorithm>

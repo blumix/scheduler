@@ -1,9 +1,9 @@
-#include "group_dialog.h"
-#include "teacher_dialog.h"
-#include "mainwindow.h"
+#include "src/gui/group_dialog.h"
+#include "src/gui/teacher_dialog.h"
+#include "src/gui/mainwindow.h"
 #include "ui_mainwindow.h"
-#include "kernel/tree_solver.h"
-#include "kernel/greedy_search_solution.h"
+#include "src/kernel/tree_solver.h"
+#include "src/kernel/greedy_search_solution.h"
 
 #include <iostream>
 #include <QStandardItemModel>

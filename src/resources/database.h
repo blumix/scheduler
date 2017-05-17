@@ -1,9 +1,11 @@
+/// \file src/resources/database.h
+
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include "group_profile.h"
-#include "index_table.h"
-#include "teacher_profile.h"
+#include "src/resources/group_profile.h"
+#include "src/misc/index_table.h"
+#include "src/resources/teacher_profile.h"
 
 #include <map>
 #include <vector>
@@ -13,7 +15,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sqlite3.h>
-
 
 
 int  callback_for_group (void *v_groups, int argc, char **argv, char **);
