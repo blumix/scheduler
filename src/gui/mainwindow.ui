@@ -74,7 +74,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normaloff>right-arrow.png</normaloff>right-arrow.png</iconset>
+               <normaloff>../../img/right-arrow.png</normaloff>../../img/right-arrow.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -91,7 +91,7 @@
              </property>
              <property name="icon">
               <iconset>
-               <normaloff>left-arrow.png</normaloff>left-arrow.png</iconset>
+               <normaloff>../../img/left-arrow.png</normaloff>../../img/left-arrow.png</iconset>
              </property>
              <property name="iconSize">
               <size>
