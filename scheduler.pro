@@ -40,7 +40,7 @@ FORMS    += src/gui/group_dialog.ui \
             src/gui/teacher_dialog.ui
 
 #QMAKE_CXXFLAGS += -std=c++14
-CONFIG += -std=c++14
+CONFIG += c++14
 
 LIBS += -lsqlite3
 
