@@ -109,10 +109,10 @@ void MainWindow::run_calculation ()
       int lesson_id = 0;
       for (const auto &lesson : lessons)
         {
-          int course_id = lesson_id++;
+          int ed_year_id = lesson_id++;
           int group_id = m_db->m_groups->get_data (val).get_group_id ();
           int teacher_id = lesson.second;
-          tree_node curr_node (course_id, group_id, teacher_id);
+          tree_node curr_node (ed_year_id, group_id, teacher_id);
           input_vector.push_back (curr_node);
         }
     }
@@ -157,22 +157,22 @@ void MainWindow::select_subj ()
 
 void MainWindow::fill_groups_model()
 {
-  int cources = 0;
+  int ed_years = 0;
   for (const auto &val : m_db->m_groups->get_ids ())
     {
-      if (cources < m_db->m_groups->get_data (val).get_course ())
+      if (ed_years < m_db->m_groups->get_data (val).get_ed_year ())
         {
-          cources = m_db->m_groups->get_data (val).get_course ();
+          ed_years = m_db->m_groups->get_data (val).get_ed_year ();
         }
     }
   m_groups_model->clear();
   QStandardItem *parent_item = m_groups_model->invisibleRootItem();
-  std::vector<QStandardItem *> cource_items;
-  for (int i = 1; i < cources + 1; i++)
+  std::vector<QStandardItem *> ed_year_items;
+  for (int i = 1; i < ed_years + 1; i++)
     {
       QStandardItem *item = new QStandardItem();
-      cource_items.push_back (item);
-      item->setText (QString ("Course %1").arg (i));
+      ed_year_items.push_back (item);
+      item->setText (QString ("ed_year %1").arg (i));
       item->setFlags (Qt::ItemIsEnabled);
       parent_item->appendRow (item);
     }
@@ -182,7 +182,7 @@ void MainWindow::fill_groups_model()
       auto group = m_db->m_groups->get_data (val);
       item->setText (QString ("Group %1%2").arg (group.get_thread ()).arg (group.get_group_num ()));
       item->setData (QVariant (group.get_group_id ()));
-      cource_items[group.get_course () - 1]->appendRow (item);
+      ed_year_items[group.get_ed_year () - 1]->appendRow (item);
     }
   ui->groups_tree->expandAll ();
 }

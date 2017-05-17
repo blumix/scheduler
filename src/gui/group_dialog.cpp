@@ -17,9 +17,6 @@ group_dialog::group_dialog (database *db, QWidget *parent) :
 
   connect (ui->add_group_button, SIGNAL (clicked ()), this, SLOT (add_button_clicked ()));
   connect (ui->remove_group_button, SIGNAL (clicked ()), this, SLOT (remove_group()));
-  connect (ui->cource, SIGNAL (editingFinished ()), this, SLOT (course_changed ()));
-  connect (ui->number, SIGNAL (editingFinished ()), this, SLOT (num_changed ()));
-  connect (ui->tread, SIGNAL (editingFinished ()), this, SLOT (thread_changed ()));
   connect (ui->treeView->selectionModel (), SIGNAL (selectionChanged (const QItemSelection, const QItemSelection)),
            this, SLOT (selection_changed ()));
 }
@@ -43,22 +40,22 @@ void group_dialog::remove_group ()
 
 void group_dialog::fill_the_model()
 {
-  int cources = 0;
+  int ed_years = 0;
   for (const auto &val : m_db->m_groups->get_ids ())
     {
-      if (cources < m_db->m_groups->get_data (val).get_course ())
+      if (ed_years < m_db->m_groups->get_data (val).get_ed_year ())
         {
-          cources = m_db->m_groups->get_data (val).get_course ();
+          ed_years = m_db->m_groups->get_data (val).get_ed_year ();
         }
     }
   m_model->clear();
   QStandardItem *parent_item = m_model->invisibleRootItem();
-  std::vector<QStandardItem *> cource_items;
-  for (int i = 1; i < cources + 1; i++)
+  std::vector<QStandardItem *> ed_year_items;
+  for (int i = 1; i < ed_years + 1; i++)
     {
       QStandardItem *item = new QStandardItem();
-      cource_items.push_back (item);
-      item->setText (QString ("Course %1").arg (i));
+      ed_year_items.push_back (item);
+      item->setText (QString ("ed_year %1").arg (i));
       item->setFlags (Qt::ItemIsEnabled);
       parent_item->appendRow (item);
     }
@@ -68,7 +65,7 @@ void group_dialog::fill_the_model()
       auto group = m_db->m_groups->get_data (val);
       item->setText (QString ("Group %1%2").arg (group.get_thread ()).arg (group.get_group_num ()));
       item->setData (QVariant (group.get_group_id ()));
-      cource_items[group.get_course () - 1]->appendRow (item);
+      ed_year_items[group.get_ed_year () - 1]->appendRow (item);
     }
   ui->treeView->expandAll ();
 }
@@ -77,14 +74,14 @@ void group_dialog::add_button_clicked()
 {
   int new_id = m_db->m_groups->create_new ();
   auto &val = m_db->m_groups->get_data (new_id);
-  val.set_cource (ui->cource->value ());
+  val.set_ed_year (ui->ed_year->value ());
   val.set_num    (ui->number->value ());
   val.set_thread (ui->tread->value ());
   fill_the_model ();
 }
 
 
-void group_dialog::course_changed ()
+void group_dialog::ed_year_changed ()
 {
   auto selected = ui->treeView->currentIndex ();
   if (!selected.isValid ())
@@ -95,7 +92,7 @@ void group_dialog::course_changed ()
     return;
 
   auto &group = m_db->m_groups->get_data (group_id);
-  group.set_cource (ui->cource->value () > 0 ? ui->cource->value () : 0);
+  group.set_ed_year (ui->ed_year->value () > 0 ? ui->ed_year->value () : 0);
   fill_the_model ();
 }
 
@@ -149,7 +146,7 @@ void group_dialog::selection_changed ()
     return;
 
   auto group = m_db->m_groups->get_data (group_id);
-  ui->cource->setValue (group.get_course ());
+  ui->ed_year->setValue (group.get_ed_year ());
   ui->number->setValue (group.get_group_num ());
   ui->tread->setValue (group.get_thread ());
 }

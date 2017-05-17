@@ -109,7 +109,7 @@ std::string database::get_sql_for_groups()
       std::string val = "VALUES (";
       val += std::to_string (data.get_group_id ()) + ", ";
       val += std::to_string (data.get_group_num ()) + ", ";
-      val += std::to_string (data.get_course ()) + ", ";
+      val += std::to_string (data.get_ed_year ()) + ", ";
       val += std::to_string (data.get_thread ()) + ");";
 
       ret += val;
@@ -134,7 +134,7 @@ void database::export_results (QString filename)
           const auto &data = m_groups->get_data (group.first);
           myfile<<time_num                                ;
           myfile<<";"                                     ;
-          myfile<<data.get_course ()                      ;
+          myfile<<data.get_ed_year ()                      ;
           myfile<<data.get_thread ()                      ;
           myfile<<data.get_group_num ()                   ;
           myfile<<";"                                     ;
@@ -170,7 +170,7 @@ int callback_for_group (void *v_groups, int argc, char **argv, char **)
   auto &data = groups->get_data (res);
 
   data.set_num (argv[1] ? atoi (argv[1]) : 1);
-  data.set_cource (argv[2] ? atoi (argv[2]) : 1);
+  data.set_ed_year (argv[2] ? atoi (argv[2]) : 1);
   data.set_thread (argv[3] ? atoi (argv[3]) : 0);
   return 0;
 }

@@ -18,7 +18,7 @@ public:
   {
     return m_group_id;
   }
-  int get_course ()const
+  int get_ed_year ()const
   {
     return m_ed_year;
   }
@@ -26,9 +26,9 @@ public:
   {
     return m_thread;
   }
-  void set_cource (int course)
+  void set_ed_year (int ed_year)
   {
-    m_ed_year = course;
+    m_ed_year = ed_year;
   }
   void set_num (int num)
   {

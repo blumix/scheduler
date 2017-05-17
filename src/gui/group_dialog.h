@@ -23,7 +23,7 @@ public:
 
 private slots:
   void add_button_clicked ();
-  void course_changed();
+  void ed_year_changed();
   void selection_changed();
   void num_changed();
   void thread_changed();

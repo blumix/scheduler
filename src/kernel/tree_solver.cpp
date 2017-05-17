@@ -32,8 +32,8 @@ void tree_solver::construct_adjacency_list (const std::vector<tree_node> &input_
           if (other_node_idx != curr_node_idx && current_element.is_neighbour (node))
             adjacted_nodes.push_back (node);
         }
-      m_adjacency_list[current_element.course_id] = adjacted_nodes;
-      m_colors[current_element.course_id] = -1;
+      m_adjacency_list[current_element.ed_year_id] = adjacted_nodes;
+      m_colors[current_element.ed_year_id] = -1;
     }
 }
 
@@ -46,7 +46,7 @@ void tree_solver::set_colors ()
       // set color of element
       for (const auto &neighbour_elem : element.second)
         {
-          int neighbour_color = m_colors[neighbour_elem.course_id];
+          int neighbour_color = m_colors[neighbour_elem.ed_year_id];
           if (neighbour_color != -1)
             availible_colors[neighbour_color] = true;
 

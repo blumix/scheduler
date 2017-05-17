@@ -7,7 +7,7 @@
 
 namespace common_defines
 {
-/// \brief Number of timeslots, e.g. 6 days * 5 courses
+/// \brief Number of timeslots, e.g. 6 days * 5 ed_years
 constexpr int all_timeslots = 30;
 };
 
