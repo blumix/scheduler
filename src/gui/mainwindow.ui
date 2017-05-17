@@ -73,8 +73,8 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>../../img/right-arrow.png</normaloff>../../img/right-arrow.png</iconset>
+              <iconset resource="../../res.qrc">
+               <normaloff>:/img/right-arrow.png</normaloff>:/img/right-arrow.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -90,8 +90,8 @@
               <string/>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>../../img/left-arrow.png</normaloff>../../img/left-arrow.png</iconset>
+              <iconset resource="../../res.qrc">
+               <normaloff>:/img/left-arrow.png</normaloff>:/img/left-arrow.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -265,6 +265,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../../res.qrc"/>
+ </resources>
  <connections/>
 </ui>

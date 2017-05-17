@@ -41,8 +41,9 @@ FORMS    += src/gui/group_dialog.ui \
 
 #QMAKE_CXXFLAGS += -std=c++14
 CONFIG += c++14
+RESOURCES += res.qrc
+
+QMAKE_CXXFLAGS += -std=c++14
+#CONFIG += c++14
 
 LIBS += -lsqlite3
-
-DISTFILES += img/right-arrow.png \
-             img/left-arrow.png
