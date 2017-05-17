@@ -17,9 +17,9 @@
 #include <sqlite3.h>
 
 
-int  callback_for_group (void *v_groups, int argc, char **argv, char **);
-void callback_for_teacher ();
-void callback_for_lesson  ();
+int callback_for_group   (void *v_groups, int argc, char **argv, char **);
+int callback_for_teacher ();
+int callback_for_lesson  ();
 
 
 class database
@@ -35,8 +35,6 @@ public:
   void load_from_sql_db ();
 
   std::string get_sql_for_groups();
-
-
 
   void export_results (QString filename);
 };

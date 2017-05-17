@@ -13,13 +13,8 @@ database::database()
 
 }
 
-static int callback (void *, int argc, char **argv, char **azColName)
+static int callback (void *, int , char **, char **)
 {
-  for (int i=0; i<argc; i++)
-    {
-      printf ("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-    }
-  printf ("\n");
   return 0;
 }
 
@@ -30,16 +25,14 @@ void database::save_to_sql_db()
   int rc;
 
   /* Open database */
-  rc = sqlite3_open ("schedlue.db", &db);
+  rc = sqlite3_open ("schedule.db", &db);
   if ( rc )
     {
-      fprintf (stderr, "Can't open database: %s\n", sqlite3_errmsg (db));
+      std::cout<<"Can't open database: "<<sqlite3_errmsg (db);
       return;
     }
   else
-    {
-      fprintf (stderr, "Opened database successfully\n");
-    }
+    std::cout<<"Opened database successfully";
 
   const char *sql_create = "CREATE TABLE IF NOT EXISTS GROUPS(ID INT PRIMARY KEY ,"\
                            " NUM INT ,"\
@@ -50,13 +43,11 @@ void database::save_to_sql_db()
   rc = sqlite3_exec (db, sql_create, callback, 0, &zErrMsg);
   if ( rc != SQLITE_OK )
     {
-      fprintf (stderr, "SQL error: %s\n", zErrMsg);
+      std::cout<<"SQL error: "<< zErrMsg;
       sqlite3_free (zErrMsg);
     }
-  else
-    {
-      fprintf (stdout, "Table created successfully\n");
-    }
+
+  std::cout<<"Table created successfully";
 
   std::string sql_req_str = get_sql_for_groups ();
   /* Create SQL statement */
@@ -66,13 +57,12 @@ void database::save_to_sql_db()
   rc = sqlite3_exec (db, sql_req, callback, 0, &zErrMsg);
   if ( rc != SQLITE_OK )
     {
-      fprintf (stderr, "SQL error: %s\n", zErrMsg);
+      std::cout<<"SQL error: "<<zErrMsg;
       sqlite3_free (zErrMsg);
     }
-  else
-    {
-      fprintf (stdout, "Records created successfully\n");
-    }
+
+  fprintf (stdout, "Records created successfully\n");
+
   sqlite3_close (db);
 }
 
@@ -84,16 +74,14 @@ void database::load_from_sql_db()
   char *zErrMsg = 0;
   int rc;
   /* Open database */
-  rc = sqlite3_open ("schedlue.db", &db);
+  rc = sqlite3_open ("schedule.db", &db);
   if ( rc )
     {
-      fprintf (stderr, "Can't open database: %s\n", sqlite3_errmsg (db));
+      std::cout<<"Can't open database: "<<sqlite3_errmsg (db);
       return;
     }
-  else
-    {
-      fprintf (stderr, "Opened database successfully\n");
-    }
+
+  std::cout<<"Opened database successfully";
 
   /* Create SQL statement */
   const char *sql = "SELECT * from GROUPS";
@@ -102,13 +90,10 @@ void database::load_from_sql_db()
   rc = sqlite3_exec (db, sql, callback_for_group, (void*)m_groups.get (), &zErrMsg);
   if ( rc != SQLITE_OK )
     {
-      fprintf (stderr, "SQL error: %s\n", zErrMsg);
+      std::cout<<"SQL error: "<<zErrMsg;
       sqlite3_free (zErrMsg);
     }
-  else
-    {
-      fprintf (stdout, "Operation done successfully\n");
-    }
+  std::cout<<"Operation done successfully";
   sqlite3_close (db);
 }
 
