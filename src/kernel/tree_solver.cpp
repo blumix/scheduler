@@ -1,6 +1,6 @@
 /// \file kernel/tree_solver.cpp
 
-#include "kernel/tree_solver.h"
+#include "src/kernel/tree_solver.h"
 
 #include <iostream>
 

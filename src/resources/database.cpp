@@ -118,7 +118,7 @@ std::string database::get_sql_for_groups()
 void database::export_results(QString filename)
 {
   std::ofstream myfile;
-  myfile.open (filename.toAscii ());
+  myfile.open (filename.toUtf8 ());
   if (!myfile.is_open ())
     return;
   myfile<<"time;group;lesson\n";

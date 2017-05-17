@@ -1,7 +1,7 @@
-#include "mainwindow.h"
+#include "src/gui/mainwindow.h"
 #include <QApplication>
 
-#include "kernel/tree_solver.h"
+#include "src/kernel/tree_solver.h"
 #include <iostream>
 
 int main(int argc, char *argv[])
