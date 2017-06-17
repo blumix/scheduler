@@ -83,17 +83,48 @@ void database::load_from_sql_db()
     }
 
   std::cout<<"Opened database successfully";
-
+  std::cout<<"Reading Groups...";
+/// gorups
   /* Create SQL statement */
-  const char *sql = "SELECT * from GROUPS";
+  const char *sql_groups = "SELECT * from GROUPS";
 
   /* Execute SQL statement */
-  rc = sqlite3_exec (db, sql, callback_for_group, (void*)m_groups.get (), &zErrMsg);
+  rc = sqlite3_exec (db, sql_groups, callback_for_group, (void*)m_groups.get (), &zErrMsg);
   if ( rc != SQLITE_OK )
     {
       std::cout<<"SQL error: "<<zErrMsg;
       sqlite3_free (zErrMsg);
     }
+///teachers
+  std::cout<<"Reading Teachers...";
+  /* Create SQL statement */
+  const char *sql_teachers = "SELECT * from TEACHERS";
+
+  /* Execute SQL statement */
+  rc = sqlite3_exec (db, sql_teachers, callback_for_teacher, (void*)m_teachers.get (), &zErrMsg);
+  if ( rc != SQLITE_OK )
+    {
+      std::cout<<"SQL error: "<<zErrMsg;
+      sqlite3_free (zErrMsg);
+    }
+
+///subjects
+  std::cout<<"Reading Subjects";
+
+  for (const auto &id : m_teachers->get_ids ())
+    {
+      /* Create SQL statement */
+      std::string sql_subjects = std::string ("SELECT * from SUBJECTS WHERE teacher_id=") + std::to_string (id) + ";";
+
+      /* Execute SQL statement */
+      rc = sqlite3_exec (db, sql_subjects.c_str (), callback_for_subjects, (void*)(&m_teachers->get_data (id)), &zErrMsg);
+      if ( rc != SQLITE_OK )
+        {
+          std::cout<<"SQL error: "<<zErrMsg;
+          sqlite3_free (zErrMsg);
+        }
+    }
+
   std::cout<<"Operation done successfully";
   sqlite3_close (db);
 }
@@ -172,5 +203,48 @@ int callback_for_group (void *v_groups, int argc, char **argv, char **)
   data.set_num (argv[1] ? atoi (argv[1]) : 1);
   data.set_ed_year (argv[2] ? atoi (argv[2]) : 1);
   data.set_thread (argv[3] ? atoi (argv[3]) : 0);
+  return 0;
+}
+
+int callback_for_teacher (void *v_teachers, int argc, char **argv, char **)
+{
+  index_table<teacher_profile>* teachers = static_cast<index_table<teacher_profile>*> (v_teachers);
+  if (!teachers)
+    return 0;
+
+  //  id  0
+  //  name 1
+
+  if (argc < 2)
+    return 0;
+
+  int id = argv[0] ? atoi (argv [0]) : -1;
+  if (id < 0)
+    return 0;
+  int res = teachers->create_new (id);
+  if (res < 0)
+    return 0;
+
+  auto &data = teachers->get_data (res);
+
+  data.set_name (QString (argv[1]));
+  return 0;
+}
+
+
+int callback_for_subjects(void *teacher, int argc, char **argv, char **)
+{
+  teacher_profile *data = static_cast<teacher_profile *> (teacher);
+
+  if (!data)
+    return 0;
+
+  // teacher id   0
+  // subject      1
+
+  if (argc < 2)
+    return 0;
+
+  data->get_subjects ().push_back (QString (argv[1]));
   return 0;
 }

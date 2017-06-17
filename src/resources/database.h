@@ -18,8 +18,8 @@
 
 
 int callback_for_group   (void *v_groups, int argc, char **argv, char **);
-int callback_for_teacher ();
-int callback_for_lesson  ();
+int callback_for_teacher (void *v_teachers, int argc, char **argv, char **);
+int callback_for_subjects (void *teacher, int argc, char **argv, char **);
 
 
 class database
