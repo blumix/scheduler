@@ -35,8 +35,11 @@ public:
   void load_from_sql_db ();
 
   std::string get_sql_for_groups();
+  std::string get_sql_for_teachers();
+  std::string get_sql_for_subjects (const teacher_profile &data);
 
   void export_results (QString filename);
+private:
 };
 
 #endif // DATABASE_H

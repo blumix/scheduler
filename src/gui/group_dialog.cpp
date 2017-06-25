@@ -55,7 +55,7 @@ void group_dialog::fill_the_model()
     {
       QStandardItem *item = new QStandardItem();
       ed_year_items.push_back (item);
-      item->setText (QString ("ed_year %1").arg (i));
+      item->setText (QString ("Education year %1").arg (i));
       item->setFlags (Qt::ItemIsEnabled);
       parent_item->appendRow (item);
     }

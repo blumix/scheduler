@@ -172,7 +172,7 @@ void MainWindow::fill_groups_model()
     {
       QStandardItem *item = new QStandardItem();
       ed_year_items.push_back (item);
-      item->setText (QString ("ed_year %1").arg (i));
+      item->setText (QString ("Education Year %1").arg (i));
       item->setFlags (Qt::ItemIsEnabled);
       parent_item->appendRow (item);
     }

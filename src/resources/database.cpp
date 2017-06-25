@@ -1,3 +1,4 @@
+#include <QMessageBox>
 #include <fstream>
 #include <iostream>
 #include "src/misc/common_defines.h"
@@ -19,6 +20,18 @@ static int callback (void *, int , char **, char **)
   return 0;
 }
 
+bool check_owerrite (const std::string& name)
+{
+  std::ifstream f(name.c_str());
+  if (!f.good())
+    return true;
+
+  return QMessageBox::question ( nullptr, "Warning",
+                                 "File already exists, do you whant to overwrite it?"
+                                 , QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes;
+}
+
+
 void database::save_to_sql_db()
 {
   sqlite3 *db;
@@ -26,6 +39,12 @@ void database::save_to_sql_db()
   int rc;
 
   /* Open database */
+  if (check_owerrite ("schedule.db"))
+    {
+      std::ofstream ofs;
+      ofs.open("schedule.db", std::ofstream::out | std::ofstream::trunc);
+      ofs.close();
+    }
   rc = sqlite3_open ("schedule.db", &db);
   if ( rc )
     {
@@ -46,7 +65,33 @@ void database::save_to_sql_db()
     {
       std::cout<<"SQL error: "<< zErrMsg;
       sqlite3_free (zErrMsg);
+      return;
     }
+
+  const char *sql_create_teachers = "CREATE TABLE IF NOT EXISTS TEACHERS(ID INT PRIMARY KEY ,"\
+                           " NAME VARCHAR);";
+
+  /* Execute SQL statement */
+  rc = sqlite3_exec (db, sql_create_teachers, callback, 0, &zErrMsg);
+  if ( rc != SQLITE_OK )
+    {
+      std::cout<<"SQL error: "<< zErrMsg;
+      sqlite3_free (zErrMsg);
+      return;
+    }
+
+  const char *sql_create_subjects = "CREATE TABLE IF NOT EXISTS SUBJECTS(ID INT,"\
+                                    " NAME VARCHAR);";
+  /* Execute SQL statement */
+  rc = sqlite3_exec (db, sql_create_subjects, callback, 0, &zErrMsg);
+  if ( rc != SQLITE_OK )
+    {
+      std::cout<<"SQL error: "<< zErrMsg;
+      sqlite3_free (zErrMsg);
+      return;
+    }
+
+
 
   std::cout<<"Table created successfully";
 
@@ -60,6 +105,34 @@ void database::save_to_sql_db()
     {
       std::cout<<"SQL error: "<<zErrMsg;
       sqlite3_free (zErrMsg);
+    }
+
+
+  sql_req_str = get_sql_for_teachers ();
+  /* Create SQL statement */
+  const char *sql_req_teachers = sql_req_str.c_str ();
+
+  /* Execute SQL statement */
+  rc = sqlite3_exec (db, sql_req_teachers, callback, 0, &zErrMsg);
+  if ( rc != SQLITE_OK )
+    {
+      std::cout<<"SQL error: "<<zErrMsg;
+      sqlite3_free (zErrMsg);
+    }
+
+  for (const auto &elem : m_teachers->get_ids ())
+    {
+      sql_req_str = get_sql_for_subjects (m_teachers->get_data (elem));
+      /* Create SQL statement */
+      const char *sql_req_subjects = sql_req_str.c_str ();
+
+      /* Execute SQL statement */
+      rc = sqlite3_exec (db, sql_req_subjects, callback, 0, &zErrMsg);
+      if ( rc != SQLITE_OK )
+        {
+          std::cout<<"SQL error: "<<zErrMsg;
+          sqlite3_free (zErrMsg);
+        }
     }
 
   fprintf (stdout, "Records created successfully\n");
@@ -82,26 +155,26 @@ void database::load_from_sql_db()
       return;
     }
 
-  std::cout<<"Opened database successfully";
-  std::cout<<"Reading Groups...";
+  std::cout<<"Opened database successfully\n";
+  std::cout<<"Reading Groups..\n.";
 /// gorups
   /* Create SQL statement */
   const char *sql_groups = "SELECT * from GROUPS";
 
   /* Execute SQL statement */
-  rc = sqlite3_exec (db, sql_groups, callback_for_group, (void*)m_groups.get (), &zErrMsg);
+  rc = sqlite3_exec (db, sql_groups, callback_for_group, static_cast<void*>(m_groups.get ()), &zErrMsg);
   if ( rc != SQLITE_OK )
     {
       std::cout<<"SQL error: "<<zErrMsg;
       sqlite3_free (zErrMsg);
     }
 ///teachers
-  std::cout<<"Reading Teachers...";
+  std::cout<<"Reading Teachers...\n";
   /* Create SQL statement */
   const char *sql_teachers = "SELECT * from TEACHERS";
 
   /* Execute SQL statement */
-  rc = sqlite3_exec (db, sql_teachers, callback_for_teacher, (void*)m_teachers.get (), &zErrMsg);
+  rc = sqlite3_exec (db, sql_teachers, callback_for_teacher, static_cast<void*>(m_teachers.get ()), &zErrMsg);
   if ( rc != SQLITE_OK )
     {
       std::cout<<"SQL error: "<<zErrMsg;
@@ -109,15 +182,15 @@ void database::load_from_sql_db()
     }
 
 ///subjects
-  std::cout<<"Reading Subjects";
+  std::cout<<"Reading Subjects\n";
 
   for (const auto &id : m_teachers->get_ids ())
     {
       /* Create SQL statement */
-      std::string sql_subjects = std::string ("SELECT * from SUBJECTS WHERE teacher_id=") + std::to_string (id) + ";";
+      std::string sql_subjects = std::string ("SELECT * from SUBJECTS WHERE ID=") + std::to_string (id) + ";";
 
       /* Execute SQL statement */
-      rc = sqlite3_exec (db, sql_subjects.c_str (), callback_for_subjects, (void*)(&m_teachers->get_data (id)), &zErrMsg);
+      rc = sqlite3_exec (db, sql_subjects.c_str (), callback_for_subjects, static_cast<void*>(&m_teachers->get_data (id)), &zErrMsg);
       if ( rc != SQLITE_OK )
         {
           std::cout<<"SQL error: "<<zErrMsg;
@@ -125,7 +198,7 @@ void database::load_from_sql_db()
         }
     }
 
-  std::cout<<"Operation done successfully";
+  std::cout<<"Operation done successfully\n";
   sqlite3_close (db);
 }
 
@@ -143,6 +216,37 @@ std::string database::get_sql_for_groups()
       val += std::to_string (data.get_ed_year ()) + ", ";
       val += std::to_string (data.get_thread ()) + ");";
 
+      ret += val;
+    }
+  return ret.c_str ();
+}
+
+std::string database::get_sql_for_teachers ()
+{
+  std::string in_res = "INSERT INTO TEACHERS (ID,NAME)";
+  std::string ret;
+  for (const auto &elem : m_teachers->get_ids())
+    {
+      ret += in_res;
+      auto &data = m_teachers->get_data (elem);
+      std::string val = "VALUES (";
+      val += std::to_string (data.get_id ()) + ", '";
+      val += data.get_name ().toStdString () + "');";
+      ret += val;
+    }
+  return ret.c_str ();
+}
+
+std::string database::get_sql_for_subjects (const teacher_profile &data)
+{
+  std::string in_res = "INSERT INTO SUBJECTS (ID,NAME)";
+  std::string ret;
+  for (const auto &elem : data.get_subjects ())
+    {
+      ret += in_res;
+      std::string val = "VALUES (";
+      val += std::to_string (data.get_id ()) + ", '";
+      val += elem.toStdString () + "');";
       ret += val;
     }
   return ret.c_str ();
