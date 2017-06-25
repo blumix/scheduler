@@ -39,12 +39,11 @@ void database::save_to_sql_db()
   int rc;
 
   /* Open database */
-  if (check_owerrite ("schedule.db"))
-    {
-      std::ofstream ofs;
-      ofs.open("schedule.db", std::ofstream::out | std::ofstream::trunc);
-      ofs.close();
-    }
+  if (!check_owerrite ("schedule.db"))
+    return;
+  std::ofstream ofs;
+  ofs.open("schedule.db", std::ofstream::out | std::ofstream::trunc);
+  ofs.close();
   rc = sqlite3_open ("schedule.db", &db);
   if ( rc )
     {
@@ -95,9 +94,9 @@ void database::save_to_sql_db()
 
   std::cout<<"Table created successfully";
 
-  std::string sql_req_str = get_sql_for_groups ();
+  QString sql_req_str = get_sql_for_groups ();
   /* Create SQL statement */
-  const char *sql_req = sql_req_str.c_str ();
+  const char *sql_req = sql_req_str.toUtf8 ().data ();
 
   /* Execute SQL statement */
   rc = sqlite3_exec (db, sql_req, callback, 0, &zErrMsg);
@@ -110,7 +109,7 @@ void database::save_to_sql_db()
 
   sql_req_str = get_sql_for_teachers ();
   /* Create SQL statement */
-  const char *sql_req_teachers = sql_req_str.c_str ();
+  const char *sql_req_teachers = sql_req_str.toUtf8 ().data ();
 
   /* Execute SQL statement */
   rc = sqlite3_exec (db, sql_req_teachers, callback, 0, &zErrMsg);
@@ -124,7 +123,7 @@ void database::save_to_sql_db()
     {
       sql_req_str = get_sql_for_subjects (m_teachers->get_data (elem));
       /* Create SQL statement */
-      const char *sql_req_subjects = sql_req_str.c_str ();
+      const char *sql_req_subjects = sql_req_str.toUtf8 ().data ();
 
       /* Execute SQL statement */
       rc = sqlite3_exec (db, sql_req_subjects, callback, 0, &zErrMsg);
@@ -202,54 +201,54 @@ void database::load_from_sql_db()
   sqlite3_close (db);
 }
 
-std::string database::get_sql_for_groups()
+QString database::get_sql_for_groups()
 {
-  std::string in_res = "INSERT INTO GROUPS (ID,NUM,ED_YEAR,THREAD)";
-  std::string ret;
+  QString in_res = "INSERT INTO GROUPS (ID,NUM,ED_YEAR,THREAD)";
+  QString ret;
   for (const auto &elem : m_groups->get_ids())
     {
       ret += in_res;
       auto &data = m_groups->get_data (elem);
-      std::string val = "VALUES (";
-      val += std::to_string (data.get_group_id ()) + ", ";
-      val += std::to_string (data.get_group_num ()) + ", ";
-      val += std::to_string (data.get_ed_year ()) + ", ";
-      val += std::to_string (data.get_thread ()) + ");";
+      QString val = "VALUES (";
+      val += QString::number (data.get_group_id ()) + ", ";
+      val += QString::number (data.get_group_num ()) + ", ";
+      val += QString::number (data.get_ed_year ()) + ", ";
+      val += QString::number (data.get_thread ()) + ");";
 
       ret += val;
     }
-  return ret.c_str ();
+  return ret;
 }
 
-std::string database::get_sql_for_teachers ()
+QString database::get_sql_for_teachers ()
 {
-  std::string in_res = "INSERT INTO TEACHERS (ID,NAME)";
-  std::string ret;
+  QString in_res = "INSERT INTO TEACHERS (ID,NAME)";
+  QString ret;
   for (const auto &elem : m_teachers->get_ids())
     {
       ret += in_res;
       auto &data = m_teachers->get_data (elem);
-      std::string val = "VALUES (";
-      val += std::to_string (data.get_id ()) + ", '";
-      val += data.get_name ().toStdString () + "');";
+      QString val = "VALUES (";
+      val += QString::number (data.get_id ()) + ", '";
+      val += data.get_name () + "');";
       ret += val;
     }
-  return ret.c_str ();
+  return ret;
 }
 
-std::string database::get_sql_for_subjects (const teacher_profile &data)
+QString database::get_sql_for_subjects (const teacher_profile &data)
 {
-  std::string in_res = "INSERT INTO SUBJECTS (ID,NAME)";
-  std::string ret;
+  QString in_res = "INSERT INTO SUBJECTS (ID,NAME)";
+  QString ret;
   for (const auto &elem : data.get_subjects ())
     {
       ret += in_res;
-      std::string val = "VALUES (";
-      val += std::to_string (data.get_id ()) + ", '";
-      val += elem.toStdString () + "');";
+      QString val = "VALUES (";
+      val += QString::number (data.get_id ()) + ", '";
+      val += elem + "');";
       ret += val;
     }
-  return ret.c_str ();
+  return ret;
 }
 
 
@@ -331,7 +330,7 @@ int callback_for_teacher (void *v_teachers, int argc, char **argv, char **)
 
   auto &data = teachers->get_data (res);
 
-  data.set_name (QString (argv[1]));
+  data.set_name (QString::fromUtf8 (argv[1]));
   return 0;
 }
 
@@ -349,6 +348,6 @@ int callback_for_subjects(void *teacher, int argc, char **argv, char **)
   if (argc < 2)
     return 0;
 
-  data->get_subjects ().push_back (QString (argv[1]));
+  data->get_subjects ().push_back (QString::fromUtf8 (argv[1]));
   return 0;
 }

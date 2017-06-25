@@ -34,9 +34,9 @@ public:
   void save_to_sql_db ();
   void load_from_sql_db ();
 
-  std::string get_sql_for_groups();
-  std::string get_sql_for_teachers();
-  std::string get_sql_for_subjects (const teacher_profile &data);
+  QString get_sql_for_groups();
+  QString get_sql_for_teachers();
+  QString get_sql_for_subjects (const teacher_profile &data);
 
   void export_results (QString filename);
 private:
