@@ -44,6 +44,9 @@
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetMaximumSize</enum>
+          </property>
           <item>
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>
@@ -115,9 +118,22 @@
        </layout>
       </item>
       <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
        <layout class="QGridLayout" name="gridLayout">
         <property name="sizeConstraint">
-         <enum>QLayout::SetMaximumSize</enum>
+         <enum>QLayout::SetMinimumSize</enum>
         </property>
         <item row="0" column="0">
          <widget class="QPushButton" name="groups_button">
@@ -260,6 +276,9 @@
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
    </property>
+   <property name="priority">
+    <enum>QAction::HighPriority</enum>
+   </property>
   </action>
   <action name="load">
    <property name="text">
@@ -269,7 +288,10 @@
     <string>Ctrl+O</string>
    </property>
    <property name="shortcutContext">
-    <enum>Qt::ApplicationShortcut</enum>
+    <enum>Qt::WidgetWithChildrenShortcut</enum>
+   </property>
+   <property name="priority">
+    <enum>QAction::HighPriority</enum>
    </property>
   </action>
  </widget>

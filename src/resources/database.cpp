@@ -51,7 +51,7 @@ void database::save_to_sql_db()
       return;
     }
   else
-    std::cout<<"Opened database successfully";
+    std::cout<<"Opened database successfully\n";
 
   const char *sql_create = "CREATE TABLE IF NOT EXISTS GROUPS(ID INT PRIMARY KEY ,"\
                            " NUM INT ,"\
@@ -92,7 +92,7 @@ void database::save_to_sql_db()
 
 
 
-  std::cout<<"Table created successfully";
+  std::cout<<"Table created successfully\n";
 
   QString sql_req_str = get_sql_for_groups ();
   /* Create SQL statement */
