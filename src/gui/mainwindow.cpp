@@ -72,7 +72,7 @@ void MainWindow::reset_selection ()
 {
   for (const auto &val : m_db->m_groups->get_ids ())
     {
-      m_db->m_groups->get_data (val).get_lessons().clear ();
+      m_db->m_groups->get_data (val).get_subjects().clear ();
     }
 }
 
@@ -91,8 +91,8 @@ void MainWindow::remove_subj ()
     return;
 
 
-  auto &lessons = m_db->m_groups->get_data (id_group).get_lessons();
-  lessons.erase (lessons.begin () + selected.row ());
+  auto &subjects = m_db->m_groups->get_data (id_group).get_subjects();
+  subjects.erase (subjects.begin () + selected.row ());
   fill_selected_model ();
 
 }
@@ -104,15 +104,15 @@ void MainWindow::run_calculation ()
 
   for (const auto &val : m_db->m_groups->get_ids ())
     {
-      auto lessons = m_db->m_groups->get_data (val).get_lessons ();
+      auto subjects = m_db->m_groups->get_data (val).get_subjects ();
 
-      int lesson_id = 0;
-      for (const auto &lesson : lessons)
+      int subject_id = 0;
+      for (const auto &subject : subjects)
         {
-          int ed_year_id = lesson_id++;
+          int course_id = subject_id++;
           int group_id = m_db->m_groups->get_data (val).get_group_id ();
-          int teacher_id = lesson.second;
-          tree_node curr_node (ed_year_id, group_id, teacher_id);
+          int teacher_id = subject.second;
+          tree_node curr_node (course_id, group_id, teacher_id);
           input_vector.push_back (curr_node);
         }
     }
@@ -120,9 +120,10 @@ void MainWindow::run_calculation ()
   tree_solver solver;
   auto result = solver.calculate (input_vector);
 
+  m_db->m_result_schedule = search_best_solution (result, m_db->m_groups->get_ids ().size ());
+
   m_db->export_results (ui->file_name->text ());
   qDebug() << "Succesfully calculated!";
-  m_db->m_result_schedule = search_best_solution (result, m_db->m_groups->get_ids ().size ());
 }
 
 void MainWindow::select_subj ()
@@ -151,28 +152,28 @@ void MainWindow::select_subj ()
   if (id_group < 0)
     return;
 
-  m_db->m_groups->get_data (id_group).get_lessons().push_back ({str, id});
+  m_db->m_groups->get_data (id_group).get_subjects().push_back ({str, id});
   fill_selected_model ();
 }
 
 void MainWindow::fill_groups_model()
 {
-  int ed_years = 0;
+  int cources = 0;
   for (const auto &val : m_db->m_groups->get_ids ())
     {
-      if (ed_years < m_db->m_groups->get_data (val).get_ed_year ())
+      if (cources < m_db->m_groups->get_data (val).get_course ())
         {
-          ed_years = m_db->m_groups->get_data (val).get_ed_year ();
+          cources = m_db->m_groups->get_data (val).get_course ();
         }
     }
   m_groups_model->clear();
   QStandardItem *parent_item = m_groups_model->invisibleRootItem();
-  std::vector<QStandardItem *> ed_year_items;
-  for (int i = 1; i < ed_years + 1; i++)
+  std::vector<QStandardItem *> cource_items;
+  for (int i = 1; i < cources + 1; i++)
     {
       QStandardItem *item = new QStandardItem();
-      ed_year_items.push_back (item);
-      item->setText (QString ("Education Year %1").arg (i));
+      cource_items.push_back (item);
+      item->setText (QString ("Course %1").arg (i));
       item->setFlags (Qt::ItemIsEnabled);
       parent_item->appendRow (item);
     }
@@ -182,9 +183,8 @@ void MainWindow::fill_groups_model()
       auto group = m_db->m_groups->get_data (val);
       item->setText (QString ("Group %1%2").arg (group.get_thread ()).arg (group.get_group_num ()));
       item->setData (QVariant (group.get_group_id ()));
-      ed_year_items[group.get_ed_year () - 1]->appendRow (item);
+      cource_items[group.get_course () - 1]->appendRow (item);
     }
-  ui->groups_tree->expandAll ();
 }
 
 
@@ -208,7 +208,6 @@ void MainWindow::fill_all_teachers_model()
           item->appendRow (sub_item);
         }
     }
-  ui->all_subjects->expandAll ();
 }
 
 
@@ -226,7 +225,7 @@ void MainWindow::fill_selected_model ()
 
 
   QStandardItem *subj_parent_item = m_selected_model->invisibleRootItem();
-  for (const auto &elem: m_db->m_groups->get_data (group_id).get_lessons ())
+  for (const auto &elem: m_db->m_groups->get_data (group_id).get_subjects ())
     {
       QStandardItem *item = new QStandardItem();
       item->setText (elem.first);

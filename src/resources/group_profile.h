@@ -38,13 +38,13 @@ public:
   {
     m_thread = thread;
   }
-  std::vector<std::pair <QString, int>> &get_lessons()
+  std::vector<std::pair <QString, int>> &get_subjects()
   {
-    return m_lessons;
+    return m_subjects;
   }
-  const std::vector<std::pair <QString, int>> &get_lessons() const
+  const std::vector<std::pair <QString, int>> &get_subjects() const
   {
-    return m_lessons;
+    return m_subjects;
   }
 private:
   int m_group_id = -1;
@@ -52,7 +52,7 @@ private:
   int m_ed_year = 1;
   int m_thread = 0;
   //just teacher ids
-  std::vector<std::pair <QString, int>> m_lessons;//if you have the same lesson twice a week just put two same ids here
+  std::vector<std::pair <QString, int>> m_subjects;//if you have the same subject twice a week just put two same ids here
 };
 
 #endif // GROUP_PROFILE_H
