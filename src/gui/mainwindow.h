@@ -9,6 +9,7 @@
 #include <memory>
 
 class QStandardItemModel;
+class QProgressBar;
 
 namespace Ui
 {
@@ -46,6 +47,7 @@ private:
   std::unique_ptr<QStandardItemModel> m_all_teachers_model;
   std::unique_ptr<QStandardItemModel> m_selected_model;
   std::unique_ptr<QStandardItemModel> m_groups_model;
+  QProgressBar *m_progress_bar;
 };
 
 #endif // MAINWINDOW_H

@@ -268,11 +268,11 @@ void database::export_results (QString filename)
           const auto &data = m_groups->get_data (group.first);
           myfile<<time_num                                ;
           myfile<<";"                                     ;
-          myfile<<data.get_ed_year ()                      ;
+          myfile<<data.get_ed_year ()                     ;
           myfile<<data.get_thread ()                      ;
           myfile<<data.get_group_num ()                   ;
           myfile<<";"                                     ;
-          myfile<<data.get_lessons ()[group.second].second;
+          myfile<<data.get_subjects ()[group.second].second;
           myfile<<"\n"                                    ;
         }
       time_num++;

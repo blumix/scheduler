@@ -6,6 +6,13 @@
 #include <iostream>
 #include <algorithm>
 #include <assert.h>
+#include <QProgressBar>
+#include <cmath>
+
+static inline double factorial(double x)
+{
+  return std::tgamma (x + 1);
+}
 
 /// \returns heuristic value for single day
 ///
@@ -63,10 +70,11 @@ static inline int heuristic_func (
   return res;
 }
 
-std::vector<std::vector<std::pair<group_id, subject_id> > > search_best_solution(
-  const std::vector<std::unordered_set<uid>> &possibilities_sets,
-  unsigned group_count
-)
+std::vector<std::vector<std::pair<group_id, subject_id> > > search_best_solution (
+    const std::vector<std::unordered_set<uid>> &possibilities_sets,
+    unsigned group_count,
+    QProgressBar *progress_bar
+    )
 {
   auto possibilities_size = possibilities_sets.size ();
 
@@ -77,10 +85,15 @@ std::vector<std::vector<std::pair<group_id, subject_id> > > search_best_solution
 
   std::vector<std::vector<std::pair<group_id, subject_id>>> result_schedule, current_schedule;
 
-  int min_hf = 1000;
+  int min_hf = 1000,
+      step = 0.;
+
+  unsigned long all_steps = factorial (common_defines::all_timeslots) / factorial (possibilities_size)
+                                     / factorial (common_defines::all_timeslots - possibilities_size);
   // print integers and permute bitmask
   do
     {
+      progress_bar->setValue (100 * step++ / all_steps);
       current_schedule.clear ();
       current_schedule.resize (common_defines::all_timeslots);
       for (size_t idx = 0; idx < common_defines::all_timeslots; idx++)

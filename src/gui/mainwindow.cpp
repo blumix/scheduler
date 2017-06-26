@@ -8,6 +8,10 @@
 #include <iostream>
 #include <QStandardItemModel>
 #include <QDebug>
+#include <QProgressBar>
+#include <QFuture>
+#include <QtCore>
+#include <QtConcurrent>
 
 MainWindow::MainWindow (QWidget *parent) :
   QMainWindow (parent),
@@ -26,6 +30,10 @@ MainWindow::MainWindow (QWidget *parent) :
   ui->all_subjects->setModel (m_all_teachers_model.get ());
 
   ui->selected_subjects->setModel (m_selected_model.get ());
+
+  m_progress_bar = new QProgressBar (this);
+  //ui->verticalLayout->addWidget (m_progress_bar);
+  ui->statusBar->addWidget (m_progress_bar);
 
   connect (ui->actionAdd_group_profile, SIGNAL (triggered()), this, SLOT (group_changed_clicked ()) );
   connect (ui->actionAdd_teacher_profile, SIGNAL (triggered()), this, SLOT (teacher_changed_clicked ()) );
@@ -120,7 +128,9 @@ void MainWindow::run_calculation ()
   tree_solver solver;
   auto result = solver.calculate (input_vector);
 
-  m_db->m_result_schedule = search_best_solution (result, m_db->m_groups->get_ids ().size ());
+  QFuture<std::vector<std::vector<std::pair<group_id, subject_id>>>> future = QtConcurrent::run (search_best_solution, result, m_db->m_groups->get_ids ().size (), m_progress_bar);
+  m_db->m_result_schedule = future.result();
+  //m_db->m_result_schedule = search_best_solution (result, m_db->m_groups->get_ids ().size (), m_progress_bar);
 
   m_db->export_results (ui->file_name->text ());
   qDebug() << "Succesfully calculated!";
@@ -161,9 +171,9 @@ void MainWindow::fill_groups_model()
   int cources = 0;
   for (const auto &val : m_db->m_groups->get_ids ())
     {
-      if (cources < m_db->m_groups->get_data (val).get_course ())
+      if (cources < m_db->m_groups->get_data (val).get_ed_year ())
         {
-          cources = m_db->m_groups->get_data (val).get_course ();
+          cources = m_db->m_groups->get_data (val).get_ed_year ();
         }
     }
   m_groups_model->clear();
@@ -183,7 +193,7 @@ void MainWindow::fill_groups_model()
       auto group = m_db->m_groups->get_data (val);
       item->setText (QString ("Group %1%2").arg (group.get_thread ()).arg (group.get_group_num ()));
       item->setData (QVariant (group.get_group_id ()));
-      cource_items[group.get_course () - 1]->appendRow (item);
+      cource_items[group.get_ed_year () - 1]->appendRow (item);
     }
 }
 

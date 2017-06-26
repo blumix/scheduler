@@ -4,13 +4,6 @@
 
 #include <iostream>
 
-//void tree_solver::print_vector (const std::vector<tree_node> &vector)
-//{
-//  std::cout << "Size=" << vector.size () << std::endl;
-//  for (const auto &elem : vector)
-//    std::cout << "-->" << elem.group_id << " " << elem.room_id << " " << elem.teacher_id << "; color=" << m_colors[elem] << std::endl;
-//}
-
 std::vector<std::unordered_set<uid>> tree_solver::calculate (const std::vector<tree_node> &input_data)
 {
   construct_adjacency_list (input_data);
