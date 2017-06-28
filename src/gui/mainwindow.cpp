@@ -86,7 +86,7 @@ void MainWindow::reset_selection ()
 
 void MainWindow::remove_subj ()
 {
-  auto selected = ui->all_subjects->currentIndex ();
+  auto selected = ui->selected_subjects->currentIndex ();
   if (!selected.isValid ())
     return;
 
@@ -149,6 +149,8 @@ void MainWindow::select_subj ()
   int row = selected.row ();
 
   const auto &id_data = m_db->m_teachers->get_data (id);
+  if (!data.isValid())
+      return;
   QString str = id_data.get_name ();
   str += " (";
   str += id_data.get_subjects()[row];
@@ -195,6 +197,7 @@ void MainWindow::fill_groups_model()
       item->setData (QVariant (group.get_group_id ()));
       cource_items[group.get_ed_year () - 1]->appendRow (item);
     }
+  ui->groups_tree->expandAll ();
 }
 
 
@@ -218,6 +221,7 @@ void MainWindow::fill_all_teachers_model()
           item->appendRow (sub_item);
         }
     }
+  ui->all_subjects->expandAll ();
 }
 
 
